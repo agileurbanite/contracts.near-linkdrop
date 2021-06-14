@@ -17,8 +17,6 @@ impl Campaign {
       self.keys.insert(&key, &KeyStatus::Active);
       self.keys_stats.active += 1;
 
-      // TODO: What is cheaper: add new key or check if the public key exists in the state?
-      // Do we attach a new key for paying gas fee from the campaign account?
       Promise::new(env::current_account_id()).add_access_key(
         key,
         1_000_000_000_000_000_000_000_000, // 1 NEAR

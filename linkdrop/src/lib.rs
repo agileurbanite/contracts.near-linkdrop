@@ -1,5 +1,5 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::json_types::{Base58PublicKey};
+use near_sdk::json_types::Base58PublicKey;
 use near_sdk::{env, near_bindgen, setup_alloc, Promise};
 
 const USER_WASM: &[u8] = include_bytes!("../../wasm/user.wasm");
@@ -22,5 +22,6 @@ impl Linkdrop {
       .transfer(env::attached_deposit())
       .add_full_access_key(public_key.into())
       .deploy_contract(USER_WASM.to_vec())
+      .function_call(b"new".to_vec(), b"{}".to_vec(), 0, 20_000_000_000_000)
   }
 }

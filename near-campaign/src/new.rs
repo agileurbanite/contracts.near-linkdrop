@@ -13,6 +13,7 @@ impl Campaign {
         claimed: 0,
         deleted: 0,
       },
+      created_at: env::block_timestamp(),
       keys: UnorderedMap::new(b"k".to_vec()),
     }
   }

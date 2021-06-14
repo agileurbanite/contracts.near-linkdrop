@@ -5,7 +5,7 @@ Init a campaign contract
 `near call $CONTRACT_ID new '{"tokens_per_key": "500000000000000000000000"}' --account-id $CONTRACT_ID`
 
 Get Campaign State
-`near view $CONTRACT_ID get_campaign '{}'`
+`near view $CONTRACT_ID get_campaign_metadata '{}'`
 
 Add Keys
 `near call $CONTRACT_ID add_keys '{"keys": ["5GfoSNJfZWHK1RmLVKbiZ8xshsLiJESMMmqYxGyuiccK", "63QK9FHM83M4cZFbjVbFnotVj1Xz1pgWoLJfTX54m7Dm"]}' --account-id $CONTRACT_ID`

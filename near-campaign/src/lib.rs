@@ -2,7 +2,7 @@ mod add_keys;
 mod claim;
 mod create_account_and_claim;
 mod delete_keys;
-mod get_campaign;
+mod get_campaign_metadata;
 mod get_key_balance;
 mod new;
 
@@ -17,6 +17,7 @@ use near_sdk::{
 
 setup_alloc!();
 
+// TODO should be testnet or near - depends of the network
 const EXTERNAL_LINKDROP_ACCOUNT: &str = "testnet";
 
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize)]
@@ -43,5 +44,6 @@ pub struct KeysStats {
 pub struct Campaign {
   tokens_per_key: Balance,
   keys_stats: KeysStats,
+  created_at: u64,
   keys: UnorderedMap<PublicKey, KeyStatus>,
 }
