@@ -1,4 +1,5 @@
 mod add_keys;
+mod get_keys;
 mod claim;
 mod create_account_and_claim;
 mod delete_keys;
