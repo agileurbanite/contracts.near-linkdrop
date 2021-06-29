@@ -11,7 +11,7 @@ use near_sdk::{
 mod add_keys;
 mod claim;
 mod create_account_and_claim;
-mod delete_keys;
+mod refund_keys;
 mod get_campaign_metadata;
 mod get_key_balance;
 mod get_keys;
@@ -28,7 +28,7 @@ pub enum KeyStatus {
   Active,
   Created,
   Claimed,
-  Deleted,
+  Refunded,
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Copy, Clone)]
@@ -38,7 +38,7 @@ pub struct KeysStats {
   active: u64,
   created: u64,
   claimed: u64,
-  deleted: u64,
+  refunded: u64,
 }
 
 #[near_bindgen]

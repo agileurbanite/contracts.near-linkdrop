@@ -11,7 +11,7 @@ impl Campaign {
         active: 0,
         created: 0,
         claimed: 0,
-        deleted: 0,
+        refunded: 0,
       },
       created_at: env::block_timestamp(),
       keys: UnorderedMap::new(b"k".to_vec()),
