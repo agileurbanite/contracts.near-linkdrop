@@ -8,9 +8,7 @@ impl Campaign {
     new_account_id: AccountId,
     new_public_key: Base58PublicKey,
   ) -> Promise {
-    // Why do we need to return promise??
     let key = env::signer_account_pk();
-    // TODO Add validations for the new_account_id
 
     self.keys.insert(&key, &KeyStatus::Created);
     self.keys_stats.active -= 1;

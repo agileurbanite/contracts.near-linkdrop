@@ -18,7 +18,7 @@ impl Campaign {
         status: self
           .keys
           .get(&pk.clone().into())
-          .expect("Don't have such key in state"),
+          .expect("No key found in the state"),
       })
       .collect()
   }

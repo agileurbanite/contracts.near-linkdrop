@@ -1,11 +1,9 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::collections::Vector;
 use near_sdk::json_types::{Base58PublicKey, U128};
 use near_sdk::serde_json::json;
 use near_sdk::{env, ext_contract, near_bindgen, setup_alloc, AccountId, PanicOnDefault, Promise};
 
 mod create_near_campaign;
-mod get_campaigns;
 mod new;
 
 // TODO Try to download contract code from linkdrop contract instead of embed it into the user contract
@@ -15,6 +13,4 @@ setup_alloc!();
 
 #[near_bindgen]
 #[derive(BorshSerialize, BorshDeserialize, PanicOnDefault)]
-pub struct User {
-  campaigns: Vector<String>,
-}
+pub struct User {}

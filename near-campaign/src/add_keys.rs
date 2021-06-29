@@ -2,15 +2,12 @@ use crate::*;
 
 #[near_bindgen]
 impl Campaign {
-  // TODO probably we should replace this Vec with some another (for efficient usage)?
-  // TODO is it possible that some keys will not be added to the account? Need to check it
   #[private]
   pub fn add_keys(&mut self, keys: Vec<Base58PublicKey>) {
     self.keys_stats.total += keys.len() as u64;
 
     keys.iter().for_each(|pk| {
       // TODO check if key is already added to the state, if yes - panic
-      // TODO Maybe we can improve it and don't clone pk
       let key = pk.clone().into();
 
       // TODO: use callback for this ??

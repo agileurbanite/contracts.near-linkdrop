@@ -1,20 +1,21 @@
-mod add_keys;
-mod get_keys;
-mod claim;
-mod create_account_and_claim;
-mod delete_keys;
-mod get_campaign_metadata;
-mod get_key_balance;
-mod new;
-
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::UnorderedMap;
 use near_sdk::json_types::{Base58PublicKey, U128};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::serde_json::json;
 use near_sdk::{
-  env, near_bindgen, setup_alloc, AccountId, Balance, PanicOnDefault, Promise, PublicKey,
+  env, ext_contract, near_bindgen, setup_alloc, AccountId, Balance, PanicOnDefault, Promise,
+  PublicKey,
 };
+
+mod add_keys;
+mod claim;
+mod create_account_and_claim;
+mod delete_keys;
+mod get_campaign_metadata;
+mod get_key_balance;
+mod get_keys;
+mod new;
 
 setup_alloc!();
 
