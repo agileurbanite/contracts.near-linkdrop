@@ -4,18 +4,18 @@ use near_sdk::json_types::{Base58PublicKey, U128};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::serde_json::json;
 use near_sdk::{
-  env, ext_contract, near_bindgen, setup_alloc, AccountId, Balance, PanicOnDefault, Promise,
-  PublicKey,
+  env, near_bindgen, setup_alloc, AccountId, Balance, PanicOnDefault, Promise, PublicKey,
 };
 
 mod add_keys;
 mod claim;
+mod clear_state;
 mod create_account_and_claim;
-mod refund_keys;
 mod get_campaign_metadata;
 mod get_key_balance;
 mod get_keys;
 mod new;
+mod refund_keys;
 
 setup_alloc!();
 

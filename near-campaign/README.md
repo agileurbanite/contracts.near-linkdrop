@@ -1,17 +1,129 @@
 Set env variable (example for git bash)
-`export CONTRACT_ID="dev-1621937102125-94580031265469"`
+export ID="dev-1621937102125-94580031265469"
 
 Init a campaign contract
-`near call $CONTRACT_ID new '{"tokens_per_key": "500000000000000000000000"}' --account-id $CONTRACT_ID`
+near call $ID new \
+'{"tokens_per_key": "500000000000000000000000"}' --account-id $ID
 
 Get Campaign State
-`near view $CONTRACT_ID get_campaign_metadata '{}'`
+near view $ID \
+get_campaign_metadata '{}'
 
-Add Keys
-`near call $CONTRACT_ID add_keys '{"keys": ["5GfoSNJfZWHK1RmLVKbiZ8xshsLiJESMMmqYxGyuiccK", "63QK9FHM83M4cZFbjVbFnotVj1Xz1pgWoLJfTX54m7Dm"]}' --account-id $CONTRACT_ID`
+
 
 Create account or Claim Key
 `https://wallet.testnet.near.org/create/dev-1621937102125-94580031265469/5a4B9cX8UeUaU9TrKqKkymUcK7At2hPpVBzATpMJL6bQfxgeLHBr9EjAzeRyS41izJ4wJMfYSBMQfAWuwuvkFQW7`
 
 Delete Keys
 `near call $CONTRACT_ID delete_keys '{"keys": ["63QK9FHM83M4cZFbjVbFnotVj1Xz1pgWoLJfTX54m7Dm"]}' --account-id $CONTRACT_ID`
+
+Seed phrase - sketch finger viable mobile fluid pilot hope nation middle limit work medal
+
+Add Keys
+near call $ID add_keys '{"keys": [
+"9F9hsDH853gyZD2p1R3NXCwURNKGP616wmWwxtP2f1K5",
+"HSUT33FHNwofRN1d1skdzSzUoVa8pMfXGS3BnrPgzSKw",
+"4aXaod95pfGjLmWNCTWwv2ErVaKa1bfKd1gem5Lc7mfz",
+"AV3yRcrp29EgcuQSKxLnQLWA7nemo8DJMH1u74GBdPGd",
+"HzcHbUxKSSRJKUGgVhj5H4sqXXmiTqTp8sARhBF8Xo64",
+"6QxSWrv8AGERoSYHb3s1WU4RAxebEv4tfZ3FmppKfM7i",
+"147UBNeqBJ5jvcKkCPWhP5aAEzaRhdTiPNwSHKsMhNPw",
+"Ar2qN3nPpMF24xvmotyb4CNCAnemKdRdRewutMzk1nXN",
+"8SoejXizhz1XqYyBo5TW9SownZ2bykNLKEq9xiLt7c7G",
+"77UsKeFcXeZaoKVTWkHbaGCybs8cuX7PFqpACRcY6YdV",
+"JCYCZzXXtYAWM8oNFgVzkJ5yf3WSW1vfYUUyWPnrvNax",
+"2QRP3dQvzx9kPPuUYMETDzP4F4AWB7HAK3Le5KJwoF3s",
+"Dr9Hg3fXzgRcZWC5Qnqbt8qzf6FKhTSRueonGCXWSibG",
+"Ay61j3f1LQ8sciaTTySEm1V976Q3cXhySGxM9eeej5p4",
+"EmfhfzSp1CxgWNfm5s3Up7YfBD5smKufwNmRRUjWQZrH",
+"64MJXmx5U5gvj7gkzhKvjaSS5b9MD5usk3QmJEWPdpSX",
+"8ea6Jdrzs6oyhg5N8hDX9dQSRe66wV2kDpvgAq9eirWZ",
+"AcDMcH4tfEVx6SY91mD4wTsQ7iSnj7oFs3pc9SiDcKSZ",
+"Rm9nF1LQ15kiQBunUrMpqkdo5h3bj2RM69HmcXrB5Km",
+"ESHsNgyrgCgpFyUAqJXu5iDeSmcgmmLds2WkDnALCaSo",
+"FFKYpZVNJ7BXLFATho9r1XTb7euDGn6oG2rSwjJXs8sM",
+"ERy1x69m2ZkVCRbkhz7rLtc7faavnFi3WtgHzPQfiGuN",
+"HW89sNtPM1c4jH4a1Ao3kYdLZPs45Z3XyQUxVM8mEfZz",
+"B2S4qFNcG9NU4HfuWDifpzCU2oT9AAKk8yqkRVTjtHPy",
+"GTXz3upkUkZwXz37bWX6gnFAejkk4bCPZ5GtzpHjhgzx",
+"8hXBo69mqfrap9kGCAaswdfuVwgD7Wt9KuAJwMhZK8Me",
+"4EBc41PT5kVjyA1EAigEGQikeJTbJxZxKDziafyPXfyy",
+"HVapFDVSSyXyET91giCXYCNAj5YyfyxQB3VEWVjCfhbA",
+"HLf8nzaNNLTwiVNUyJZ9c6Cz6t4bPXYEUp5FZeuZzZSD",
+"H6bFhfqyFToBPJLV9sA3JWQ6EepB1b1Y6exVHJ7ncHi4",
+"5ZWdWBp9DvjceAorvqMonQaiHmdjaFNGTywKvj3bNV91",
+"DtGKvpjM1r61Dsto7qNinoYySuaA2gseDMaaQumYEWXP",
+"8zsjwNQdxYuCB5brt1YMSWM77SGTQXvrLnzDMKjQQDxN",
+"P8qMpbSnMMEAzYLG4PC4gQ91wkfjgan29Nr7RZKcibp",
+"H16nCNA7LDody8QEcwgRKNJtmiE9aJL2J4iJ1Bvp9f4U",
+"GZNy6EAzBJyTzqzY5Y4FJELHyqN5tjJoLiTVhLt6V1AT",
+"BH9os7Kmpb4gdygymrqmdADFP7H5cY9bY7DbwNekpEvY",
+"9qa5KqHxtUZ49jmzhy9R22xJVvWTHYdd9hYU6yYRSRWr",
+"HzNiWwG4A3kZhMhV2fqJre5gH7woEhLku5w4AR7a1KF4",
+"FnNCfsQtCkBJC7w4naVoqv1mGPg8wio3T9YCJyH6G5A6",
+"3Z7ydzhQLJm7eR98nJRxeUWN6ScFrW6BNK9v7xpmRWJ6",
+"mGBSQ2F4hAYUTPeZFYBEYGBAi6XmjtQa9mQDeJKVyp4",
+"BydrsCaBpxby51t97i4XZ94PY9chzSwo58A3koDsMZcH",
+"FaEZAM4x54A7oqMdktKwfGhTCM19UteZeFu3hMzzPZZg",
+"AhdF6rRs2SrAJ74HQkkiYTk43mC1LX9iGjusZoDLDhR1",
+"73G3PeHSTDVsAXQ8kSJVeLhKedFAXbJT8RGVxJooCHPy",
+"861aJyHrmyoiwRsw1g2ZSfphBaoCZXmtDQXrL6asF9yA",
+"EWgUDsNfQqTx5PEKYuuR3UcMnJgcW7nc9t68A9oZ46YK",
+"BpfFTewuaghmuQeitws3QNTfSXqhNKeSSKbfPXr1TiJ8",
+"HRzEpfiCuK31krVmMgH4DcgFbCCi9WbZg8awzsxqKXXX"
+]}' --account-id $ID --gas 300000000000000
+
+near call $ID clear_state '{"keys": [
+"9F9hsDH853gyZD2p1R3NXCwURNKGP616wmWwxtP2f1K5",
+"HSUT33FHNwofRN1d1skdzSzUoVa8pMfXGS3BnrPgzSKw",
+"4aXaod95pfGjLmWNCTWwv2ErVaKa1bfKd1gem5Lc7mfz",
+"AV3yRcrp29EgcuQSKxLnQLWA7nemo8DJMH1u74GBdPGd",
+"HzcHbUxKSSRJKUGgVhj5H4sqXXmiTqTp8sARhBF8Xo64",
+"6QxSWrv8AGERoSYHb3s1WU4RAxebEv4tfZ3FmppKfM7i",
+"147UBNeqBJ5jvcKkCPWhP5aAEzaRhdTiPNwSHKsMhNPw",
+"Ar2qN3nPpMF24xvmotyb4CNCAnemKdRdRewutMzk1nXN",
+"8SoejXizhz1XqYyBo5TW9SownZ2bykNLKEq9xiLt7c7G",
+"77UsKeFcXeZaoKVTWkHbaGCybs8cuX7PFqpACRcY6YdV",
+"JCYCZzXXtYAWM8oNFgVzkJ5yf3WSW1vfYUUyWPnrvNax",
+"2QRP3dQvzx9kPPuUYMETDzP4F4AWB7HAK3Le5KJwoF3s",
+"Dr9Hg3fXzgRcZWC5Qnqbt8qzf6FKhTSRueonGCXWSibG",
+"Ay61j3f1LQ8sciaTTySEm1V976Q3cXhySGxM9eeej5p4",
+"EmfhfzSp1CxgWNfm5s3Up7YfBD5smKufwNmRRUjWQZrH",
+"64MJXmx5U5gvj7gkzhKvjaSS5b9MD5usk3QmJEWPdpSX",
+"8ea6Jdrzs6oyhg5N8hDX9dQSRe66wV2kDpvgAq9eirWZ",
+"AcDMcH4tfEVx6SY91mD4wTsQ7iSnj7oFs3pc9SiDcKSZ",
+"Rm9nF1LQ15kiQBunUrMpqkdo5h3bj2RM69HmcXrB5Km",
+"ESHsNgyrgCgpFyUAqJXu5iDeSmcgmmLds2WkDnALCaSo",
+"FFKYpZVNJ7BXLFATho9r1XTb7euDGn6oG2rSwjJXs8sM",
+"ERy1x69m2ZkVCRbkhz7rLtc7faavnFi3WtgHzPQfiGuN",
+"HW89sNtPM1c4jH4a1Ao3kYdLZPs45Z3XyQUxVM8mEfZz",
+"B2S4qFNcG9NU4HfuWDifpzCU2oT9AAKk8yqkRVTjtHPy",
+"GTXz3upkUkZwXz37bWX6gnFAejkk4bCPZ5GtzpHjhgzx",
+"8hXBo69mqfrap9kGCAaswdfuVwgD7Wt9KuAJwMhZK8Me",
+"4EBc41PT5kVjyA1EAigEGQikeJTbJxZxKDziafyPXfyy",
+"HVapFDVSSyXyET91giCXYCNAj5YyfyxQB3VEWVjCfhbA",
+"HLf8nzaNNLTwiVNUyJZ9c6Cz6t4bPXYEUp5FZeuZzZSD",
+"H6bFhfqyFToBPJLV9sA3JWQ6EepB1b1Y6exVHJ7ncHi4",
+"5ZWdWBp9DvjceAorvqMonQaiHmdjaFNGTywKvj3bNV91",
+"DtGKvpjM1r61Dsto7qNinoYySuaA2gseDMaaQumYEWXP",
+"8zsjwNQdxYuCB5brt1YMSWM77SGTQXvrLnzDMKjQQDxN",
+"P8qMpbSnMMEAzYLG4PC4gQ91wkfjgan29Nr7RZKcibp",
+"H16nCNA7LDody8QEcwgRKNJtmiE9aJL2J4iJ1Bvp9f4U",
+"GZNy6EAzBJyTzqzY5Y4FJELHyqN5tjJoLiTVhLt6V1AT",
+"BH9os7Kmpb4gdygymrqmdADFP7H5cY9bY7DbwNekpEvY",
+"9qa5KqHxtUZ49jmzhy9R22xJVvWTHYdd9hYU6yYRSRWr",
+"HzNiWwG4A3kZhMhV2fqJre5gH7woEhLku5w4AR7a1KF4",
+"FnNCfsQtCkBJC7w4naVoqv1mGPg8wio3T9YCJyH6G5A6",
+"3Z7ydzhQLJm7eR98nJRxeUWN6ScFrW6BNK9v7xpmRWJ6",
+"mGBSQ2F4hAYUTPeZFYBEYGBAi6XmjtQa9mQDeJKVyp4",
+"BydrsCaBpxby51t97i4XZ94PY9chzSwo58A3koDsMZcH",
+"FaEZAM4x54A7oqMdktKwfGhTCM19UteZeFu3hMzzPZZg",
+"AhdF6rRs2SrAJ74HQkkiYTk43mC1LX9iGjusZoDLDhR1",
+"73G3PeHSTDVsAXQ8kSJVeLhKedFAXbJT8RGVxJooCHPy",
+"861aJyHrmyoiwRsw1g2ZSfphBaoCZXmtDQXrL6asF9yA",
+"EWgUDsNfQqTx5PEKYuuR3UcMnJgcW7nc9t68A9oZ46YK",
+"BpfFTewuaghmuQeitws3QNTfSXqhNKeSSKbfPXr1TiJ8",
+"HRzEpfiCuK31krVmMgH4DcgFbCCi9WbZg8awzsxqKXXX"
+]}' --account-id $ID --gas 300000000000000
+
+

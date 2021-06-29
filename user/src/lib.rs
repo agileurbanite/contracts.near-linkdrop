@@ -1,7 +1,7 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::json_types::{Base58PublicKey, U128};
 use near_sdk::serde_json::json;
-use near_sdk::{env, ext_contract, near_bindgen, setup_alloc, AccountId, PanicOnDefault, Promise};
+use near_sdk::{env, near_bindgen, setup_alloc, AccountId, PanicOnDefault, Promise};
 
 mod create_near_campaign;
 mod new;

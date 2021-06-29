@@ -13,7 +13,7 @@ impl Campaign {
 
       Promise::new(env::current_account_id())
         .delete_key(key)
-        .then(Promise::new(beneficiary_id).transfer(self.tokens_per_key));
+        .then(Promise::new(beneficiary_id.clone()).transfer(self.tokens_per_key));
     });
   }
 }
