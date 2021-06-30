@@ -1,25 +1,16 @@
 Set env variable (example for git bash)
-export ID="dev-1621937102125-94580031265469"
+`export ID="dev-1621937102125-94580031265469"`
 
 Init a campaign contract
-near call $ID new \
-'{"tokens_per_key": "500000000000000000000000"}' --account-id $ID
+`near call $ID new '{"tokens_per_key": "500000000000000000000000"}' --account-id $ID`
 
 Get Campaign State
-near view $ID \
-get_campaign_metadata '{}'
-
-
-
-Create account or Claim Key
-`https://wallet.testnet.near.org/create/dev-1621937102125-94580031265469/5a4B9cX8UeUaU9TrKqKkymUcK7At2hPpVBzATpMJL6bQfxgeLHBr9EjAzeRyS41izJ4wJMfYSBMQfAWuwuvkFQW7`
-
-Delete Keys
-`near call $CONTRACT_ID delete_keys '{"keys": ["63QK9FHM83M4cZFbjVbFnotVj1Xz1pgWoLJfTX54m7Dm"]}' --account-id $CONTRACT_ID`
+`near view $ID get_campaign_metadata '{}'`
 
 Seed phrase - sketch finger viable mobile fluid pilot hope nation middle limit work medal
 
 Add Keys
+`
 near call $ID add_keys '{"keys": [
 "9F9hsDH853gyZD2p1R3NXCwURNKGP616wmWwxtP2f1K5",
 "HSUT33FHNwofRN1d1skdzSzUoVa8pMfXGS3BnrPgzSKw",
@@ -72,8 +63,13 @@ near call $ID add_keys '{"keys": [
 "BpfFTewuaghmuQeitws3QNTfSXqhNKeSSKbfPXr1TiJ8",
 "HRzEpfiCuK31krVmMgH4DcgFbCCi9WbZg8awzsxqKXXX"
 ]}' --account-id $ID --gas 300000000000000
+`
 
-near call $ID clear_state '{"keys": [
+Create account or Claim Key
+`https://wallet.testnet.near.org/create/dev-1621937102125-94580031265469/5a4B9cX8UeUaU9TrKqKkymUcK7At2hPpVBzATpMJL6bQfxgeLHBr9EjAzeRyS41izJ4wJMfYSBMQfAWuwuvkFQW7`
+
+Delete keys from state
+`near call $ID clear_state '{"keys": [
 "9F9hsDH853gyZD2p1R3NXCwURNKGP616wmWwxtP2f1K5",
 "HSUT33FHNwofRN1d1skdzSzUoVa8pMfXGS3BnrPgzSKw",
 "4aXaod95pfGjLmWNCTWwv2ErVaKa1bfKd1gem5Lc7mfz",
@@ -124,6 +120,6 @@ near call $ID clear_state '{"keys": [
 "EWgUDsNfQqTx5PEKYuuR3UcMnJgcW7nc9t68A9oZ46YK",
 "BpfFTewuaghmuQeitws3QNTfSXqhNKeSSKbfPXr1TiJ8",
 "HRzEpfiCuK31krVmMgH4DcgFbCCi9WbZg8awzsxqKXXX"
-]}' --account-id $ID --gas 300000000000000
+]}' --account-id $ID --gas 300000000000000`
 
 

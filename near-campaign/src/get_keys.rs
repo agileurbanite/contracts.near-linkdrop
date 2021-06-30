@@ -1,6 +1,10 @@
 use crate::*;
 
-// View method
+/*
+  get_keys allows us to check the status of specific keys -
+  if a key was claimed or it is still active etc
+ */
+
 #[derive(Serialize, Deserialize)]
 #[serde(crate = "near_sdk::serde")]
 pub struct Key {

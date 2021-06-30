@@ -7,10 +7,10 @@ impl Campaign {
     self.keys_stats.total += keys.len() as u64;
 
     keys.iter().for_each(|pk| {
-      // TODO check if key is already added to the state, if yes - panic
+      // TODO do we need to check if key is already added to the state?
       let key = pk.clone().into();
 
-      // TODO: use callback for this ??
+      // TODO: use callback for this?
       self.keys.insert(&key, &KeyStatus::Active);
       self.keys_stats.active += 1;
 
