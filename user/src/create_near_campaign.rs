@@ -1,6 +1,7 @@
 use crate::*;
 
 // TODO Add last_campaign_id (1,2,3...) - need to use with path for generating keys
+// TODO Validate attached amount of NEAR, add total_keys field
 #[near_bindgen]
 impl User {
   #[payable]
