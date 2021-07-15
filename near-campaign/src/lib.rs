@@ -17,12 +17,15 @@ mod get_keys;
 mod new;
 mod refund_keys;
 
+#[cfg(test)]
+mod tests;
+
 setup_alloc!();
 
 // TODO should be testnet or near - depends of the network
 const EXTERNAL_LINKDROP_ACCOUNT: &str = "testnet";
 
-#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize)]
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, PartialEq, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub enum KeyStatus {
   Active,
@@ -31,7 +34,9 @@ pub enum KeyStatus {
   Refunded,
 }
 
-#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Copy, Clone)]
+#[derive(
+  BorshSerialize, BorshDeserialize, Serialize, Deserialize, Copy, Clone, PartialEq, Debug,
+)]
 #[serde(crate = "near_sdk::serde")]
 pub struct KeysStats {
   total: u64,
