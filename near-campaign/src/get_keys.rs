@@ -22,7 +22,7 @@ impl Campaign {
         status: self
           .keys
           .get(&pk.clone().into())
-          .expect("No key found in the state"),
+          .expect("No key found in the state"), // TODO return None instead of panic
       })
       .collect()
   }

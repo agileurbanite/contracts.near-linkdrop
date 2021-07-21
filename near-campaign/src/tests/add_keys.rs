@@ -12,5 +12,8 @@ fn add_one_key() {
 
   contract.add_keys(vec![pk.clone().into()]);
 
-  assert_eq!(Some(KeyStatus::Active), contract.keys.get(&pk.clone().into()));
+  assert_eq!(
+    Some(KeyStatus::Active),
+    contract.keys.get(&pk.clone().into())
+  );
 }

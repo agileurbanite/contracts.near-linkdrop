@@ -22,7 +22,7 @@ mod tests;
 
 setup_alloc!();
 
-// TODO should be testnet or near - depends of the network
+// TODO should be 'testnet' or 'near' - depends of the network
 const EXTERNAL_LINKDROP_ACCOUNT: &str = "testnet";
 
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, PartialEq, Debug)]

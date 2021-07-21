@@ -7,7 +7,10 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-near-sdk = '3.0.1'
+near-sdk = '3.1.0'
+
+[dev-dependencies]
+near-sdk-sim = "3.2.0"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

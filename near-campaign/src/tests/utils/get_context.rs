@@ -2,10 +2,10 @@ use near_sdk::{VMContext};
 
 pub fn get_context() -> VMContext {
   VMContext {
-    current_account_id: "alice.testnet".to_string(),
-    signer_account_id: "robert.testnet".to_string(),
+    current_account_id: "a.testnet".to_string(),
+    signer_account_id: "a.testnet".to_string(),
     signer_account_pk: vec![0, 1, 2],
-    predecessor_account_id: "jane.testnet".to_string(),
+    predecessor_account_id: "a.testnet".to_string(),
     input: vec![],
     block_index: 0,
     block_timestamp: 0,
