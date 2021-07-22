@@ -1,4 +1,5 @@
 use crate::*;
+
 /*
   'claim' allows us to send some amount of NEAR that is defined by 'tokens_per_key' to any account
   This method has the same signature as the original contract - so a user can use NEAR Wallet

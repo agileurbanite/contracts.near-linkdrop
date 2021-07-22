@@ -1,5 +1,8 @@
 use crate::*;
 
+// TODO add total keys are - we need to create a new campaign with a predefined amount of keys
+// instead of calculated in dynamically during add_keys
+
 #[near_bindgen]
 impl Campaign {
   #[init]

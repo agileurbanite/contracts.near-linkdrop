@@ -1,5 +1,3 @@
-mod add_keys;
+mod add_multiple_key_chunks;
+mod add_one_key;
 mod utils;
-
-use near_sdk::{testing_env, MockedBlockchain};
-use utils::get_context;
