@@ -1,10 +1,2 @@
-// mod utils;
-//
-// use utils::init;
-//
-// #[test]
-// fn simulate_some_view_function() {
-//   init();
-//
-//   // dbg!(contract);
-// }
+mod claim_one_link;
+mod utils;

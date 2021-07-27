@@ -16,7 +16,7 @@ impl Campaign {
 
       Promise::new(env::current_account_id()).add_access_key(
         key,
-        1_000_000_000_000_000_000_000_000, // 1 NEAR
+        1_000_000_000_000_000_000_000_000, // 1 NEAR TODO Should we use an unlimited amount?
         env::current_account_id(),
         b"create_account_and_claim,claim".to_vec(),
       );

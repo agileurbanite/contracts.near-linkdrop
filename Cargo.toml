@@ -5,11 +5,12 @@ authors = ["eclipseeer <eclipseeer@gmail.com>"]
 edition = "2018"
 
 [workspace]
-members = ['near-campaign']
+members = ['linkdrop', 'user', 'near-campaign']
 
 [dev-dependencies]
 near-sdk = "3.1.0"
 near-sdk-sim = "3.2.0"
-#linkdrop = { path = "./linkdrop" }
-#user = { path = "./user" }
+near-crypto = "0.1.0"
+linkdrop = { path = "linkdrop" }
+user = { path = "user" }
 near-campaign = { path = "near-campaign" }

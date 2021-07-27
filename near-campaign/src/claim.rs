@@ -1,11 +1,11 @@
 use crate::*;
 
 /*
-  'claim' allows us to send some amount of NEAR that is defined by 'tokens_per_key' to any account
-  This method has the same signature as the original contract - so a user can use NEAR Wallet
-  to claim his tokens.
-  https://github.com/near/near-linkdrop/blob/master/src/lib.rs#L72
- */
+ 'claim' allows us to send some amount of NEAR that is defined by 'tokens_per_key' to any account
+ This method has the same signature as the original contract - so a user can use NEAR Wallet
+ to claim his tokens.
+ https://github.com/near/near-linkdrop/blob/master/src/lib.rs#L72
+*/
 
 #[near_bindgen]
 impl Campaign {
@@ -15,6 +15,10 @@ impl Campaign {
       env::is_valid_account_id(account_id.as_bytes()),
       "Invalid account id"
     );
+
+    // TODO do we need to check that the key is the functional call access key?
+    // Right now it is possible to call this method with full-access key and it will cause
+    // we won't be able to delete the account and return tokens back to the owner.
 
     let key = env::signer_account_pk();
 
