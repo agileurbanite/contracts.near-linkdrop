@@ -14,6 +14,8 @@ impl Campaign {
     self.keys_stats.active -= 1;
     self.keys_stats.created += 1;
 
+    // TODO We need to check if the account was successfully created. Now the key will be deleted
+    // even if we will get an error and the account wasn't created.
     Promise::new(EXTERNAL_LINKDROP_ACCOUNT.to_string())
       .function_call(
         b"create_account".to_vec(),
