@@ -1,6 +1,5 @@
 use crate::*;
 
-// TODO instead of getting a name from the args get it from signer_account_id (as we do it on the UI)
 #[near_bindgen]
 impl Linkdrop {
   #[payable]
