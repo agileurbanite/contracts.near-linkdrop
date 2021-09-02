@@ -14,7 +14,11 @@ pub struct Metadata {
 impl Campaign {
   pub fn get_campaign_metadata(self) -> Metadata {
     // TODO rework it! keys.len() is a wrong param - use keys_stats.active instead
-    let status = if self.keys.len() > 0 { "active" } else { "completed" };
+    let status = if self.keys.len() > 0 {
+      "active"
+    } else {
+      "completed"
+    };
 
     Metadata {
       tokens_per_key: self.tokens_per_key.into(),

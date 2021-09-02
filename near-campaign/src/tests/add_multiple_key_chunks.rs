@@ -1,6 +1,6 @@
 use super::utils::{create_campaign, get_context, keys};
 use crate::*;
-use near_sdk::{testing_env, MockedBlockchain};
+use near_sdk::testing_env;
 
 #[test]
 fn add_multiple_key_chunks() {

@@ -11,7 +11,7 @@ const SK: &str =
 #[test]
 fn claim_one_link() {
   let (root, mut near_campaign) = init("5");
-  let bob = root.create_user("bob".to_string(), to_yocto("10"));
+  let bob = root.create_user("bob".parse().unwrap(), to_yocto("10"));
   let public_keys = get_public_keys(0, 0);
 
   call!(
@@ -28,8 +28,10 @@ fn claim_one_link() {
   }
 
   // We want to sing transaction by new key;
-  let claim_signer =
-    InMemorySigner::from_secret_key(near_campaign.account_id(), SecretKey::from_str(SK).unwrap());
+  let claim_signer = InMemorySigner::from_secret_key(
+    near_campaign.account_id().into(),
+    SecretKey::from_str(SK).unwrap(),
+  );
 
   near_campaign.user_account.signer = claim_signer.clone();
 

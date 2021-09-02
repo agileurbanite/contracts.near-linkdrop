@@ -5,5 +5,9 @@ lazy_static_include::lazy_static_include_bytes! {
 }
 
 pub fn init_external_linkdrop(root: &UserAccount) {
-  root.deploy(&EXTERNAL_LINKDROP, "testnet".to_string(), to_yocto("5"));
+  root.deploy(
+    &EXTERNAL_LINKDROP,
+    "testnet".parse().unwrap(),
+    to_yocto("5"),
+  );
 }

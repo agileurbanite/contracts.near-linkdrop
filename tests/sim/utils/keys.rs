@@ -1,5 +1,4 @@
-use near_sdk::json_types::Base58PublicKey;
-use near_sdk::serde::export::TryFrom;
+use near_sdk::PublicKey;
 
 const KEYS: [&str; 200] = [
   "8bFrYwXUEvLH5zkzGn2fG2bKjJu3kNNP4xXqsBvc2nJe",
@@ -204,9 +203,9 @@ const KEYS: [&str; 200] = [
   "AwKrBcAU3tPxzSKNx1th82MpTptCCihVd8pGvhw7kdaq",
 ];
 
-pub fn get_public_keys(from: usize, to: usize) -> Vec<Base58PublicKey> {
+pub fn get_public_keys(from: usize, to: usize) -> Vec<PublicKey> {
   KEYS[from..=to]
     .iter()
-    .map(|&key| Base58PublicKey::try_from(key).unwrap())
+    .map(|&key| key.parse().unwrap())
     .collect()
 }
