@@ -1,4 +1,4 @@
-use near_sdk::{VMContext};
+use near_sdk::VMContext;
 
 pub fn get_context() -> VMContext {
   VMContext {
