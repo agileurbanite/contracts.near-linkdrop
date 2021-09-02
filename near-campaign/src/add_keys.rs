@@ -4,11 +4,12 @@ use crate::*;
 impl Campaign {
   #[private]
   pub fn add_keys(&mut self, keys: Vec<Base58PublicKey>) {
+    // TODO this doesn't handle overlap of keys that already exist in the map?
     self.keys_stats.total += keys.len() as u64;
 
-    keys.iter().for_each(|pk| {
+    keys.into_iter().for_each(|pk| {
       // TODO do we need to check if key is already added to the state?
-      let key = pk.clone().into();
+      let key = pk.0;
 
       // TODO: use callback for this?
       self.keys.insert(&key, &KeyStatus::Active);

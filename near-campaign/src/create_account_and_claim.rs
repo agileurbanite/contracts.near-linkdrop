@@ -21,8 +21,7 @@ impl Campaign {
         b"create_account".to_vec(),
         json!({ "new_account_id": new_account_id, "new_public_key": new_public_key })
           .to_string()
-          .as_bytes()
-          .to_vec(),
+          .into_bytes(),
         self.tokens_per_key,
         50_000_000_000_000, // 50 Tgas
       )

@@ -4,8 +4,8 @@ use crate::*;
 #[near_bindgen]
 impl Linkdrop {
   #[payable]
-  pub fn create_user_account(&mut self, name: String, public_key: Base58PublicKey) -> Promise {
-    let account_id = format!("{}.{}", name, env::current_account_id());
+  pub fn create_user_account(public_key: Base58PublicKey) -> Promise {
+    let account_id = format!("{}.{}", env::signer_account_id(), env::current_account_id());
 
     Promise::new(account_id)
       .create_account()

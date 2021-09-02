@@ -1,4 +1,3 @@
-use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::json_types::Base58PublicKey;
 use near_sdk::{env, near_bindgen, setup_alloc, Promise};
 
@@ -9,5 +8,4 @@ const USER_WASM: &[u8] = include_bytes!("../../wasm/user.wasm");
 setup_alloc!();
 
 #[near_bindgen]
-#[derive(BorshSerialize, BorshDeserialize, Default)]
 pub struct Linkdrop {}

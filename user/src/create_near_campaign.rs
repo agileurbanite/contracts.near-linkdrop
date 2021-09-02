@@ -7,7 +7,6 @@ impl User {
   #[payable]
   #[private]
   pub fn create_near_campaign(
-    &mut self,
     name: AccountId,
     public_key: Base58PublicKey,
     tokens_per_key: U128,
@@ -23,8 +22,7 @@ impl User {
         b"new".to_vec(),
         json!({ "tokens_per_key": tokens_per_key })
           .to_string()
-          .as_bytes()
-          .to_vec(),
+          .into_bytes(),
         0,
         50_000_000_000_000,
       )
