@@ -1,8 +1,6 @@
+use crate::*;
 use near_sdk::{Gas, PublicKey};
 
-use crate::*;
-
-// TODO Add last_campaign_id (1,2,3...) - need to use with path for generating keys
 // TODO Validate attached amount of NEAR, add total_keys field
 #[near_bindgen]
 impl User {
@@ -22,9 +20,13 @@ impl User {
       .deploy_contract(NEAR_CAMPAIGN_WASM.to_vec())
       .function_call(
         "new".to_string(),
-        json!({ "tokens_per_key": tokens_per_key })
-          .to_string()
-          .into_bytes(),
+        json!({
+          "campaign_id": 1,
+          "tokens_per_key": tokens_per_key,
+          "account_creator": "testnet"
+        })
+        .to_string()
+        .into_bytes(),
         0,
         Gas(50_000_000_000_000),
       )

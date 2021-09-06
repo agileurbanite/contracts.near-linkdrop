@@ -13,12 +13,16 @@ pub fn init(tokens_per_key: &str) -> (UserAccount, ContractAccount<NearCampaign>
   let genesis = GenesisConfig::default();
   let root = init_simulator(Some(genesis));
 
+  let campaign_id = 1;
+  let tokens_per_keys = U128::from(to_yocto(tokens_per_key));
+  let account_creator = "testnet".to_string();
+
   let near_campaign = deploy!(
     contract: NearCampaign,
     contract_id: "near_campaign",
     bytes: &NEAR_CAMPAIGN,
     signer_account: root,
-    init_method: new(U128::from(to_yocto(tokens_per_key)))
+    init_method: new(campaign_id, tokens_per_keys, account_creator),
   );
 
   (root, near_campaign)

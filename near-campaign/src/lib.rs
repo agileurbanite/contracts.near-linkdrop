@@ -18,9 +18,6 @@ mod refund_keys;
 #[cfg(test)]
 mod tests;
 
-// TODO should be 'testnet' or 'near' - depends of the network
-const EXTERNAL_LINKDROP_ACCOUNT: &str = "testnet";
-
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, PartialEq, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub enum KeyStatus {
@@ -42,11 +39,19 @@ pub struct KeysStats {
   refunded: u64,
 }
 
+/*
+  account_creator - account of the original linkdrop (root account) 'testnet' in testnet
+  and 'near' in mainnet
+ */
+
 #[near_bindgen]
 #[derive(BorshSerialize, BorshDeserialize, PanicOnDefault)]
 pub struct Campaign {
+  campaign_id: u64,
   tokens_per_key: Balance,
-  keys_stats: KeysStats,
   created_at: u64,
+  account_creator: AccountId,
+  keys_stats: KeysStats,
   keys: UnorderedMap<PublicKey, KeyStatus>,
+  version: String,
 }

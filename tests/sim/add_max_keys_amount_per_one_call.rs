@@ -11,7 +11,6 @@ use near_sdk_sim::{call, to_yocto, view};
 use std::str::FromStr;
 
 // TODO Need to finish
-
 // Test the that the add_keys will works correctly with the predefined keys amount
 
 #[test]
@@ -23,18 +22,6 @@ fn add_keys_fail() {
     near_campaign.user_account,
     near_campaign.add_keys(public_keys)
   );
-
-  // 300000000000000
-
-  // 108594692914512
-  // 001665668272053
-
-  // 055131666112497
-  // 055132786365708
-
-  // dbg!(res.gas_burnt() / 1_000_000_000_000);
-  // dbg!(res.promise_errors());
-  // dbg!(res.logs());
 
   // let res1 = view!(near_campaign.get_keys(get_public_keys(89, 99)));
   let res1 = view!(near_campaign.get_campaign_metadata());
