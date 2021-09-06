@@ -10,8 +10,8 @@ pub enum ClearStatus {
 impl Campaign {
   #[private]
   pub fn clear_state(&mut self, keys: Vec<Base58PublicKey>) -> ClearStatus {
-    keys.iter().for_each(|pk| {
-      let key = pk.clone().into();
+    keys.into_iter().for_each(|pk| {
+      let key = pk.into();
       self.keys.remove(&key);
       // TODO only if status == 'active' remove access key
       Promise::new(env::current_account_id()).delete_key(key);

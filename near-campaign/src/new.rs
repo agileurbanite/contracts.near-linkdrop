@@ -17,7 +17,7 @@ impl Campaign {
         refunded: 0,
       },
       created_at: env::block_timestamp(),
-      keys: UnorderedMap::new(b"k".to_vec()),
+      keys: UnorderedMap::new(b"k"),
     }
   }
 }
