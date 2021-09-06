@@ -1,11 +1,9 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::UnorderedMap;
-use near_sdk::json_types::{Base58PublicKey, U128};
+use near_sdk::json_types::U128;
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::serde_json::json;
-use near_sdk::{
-  env, near_bindgen, setup_alloc, AccountId, Balance, PanicOnDefault, Promise, PublicKey,
-};
+use near_sdk::{env, near_bindgen, AccountId, Balance, PanicOnDefault, Promise, PublicKey};
 
 mod add_keys;
 mod claim;
@@ -19,8 +17,6 @@ mod refund_keys;
 
 #[cfg(test)]
 mod tests;
-
-setup_alloc!();
 
 // TODO should be 'testnet' or 'near' - depends of the network
 const EXTERNAL_LINKDROP_ACCOUNT: &str = "testnet";

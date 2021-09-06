@@ -9,7 +9,7 @@ pub enum ClearStatus {
 #[near_bindgen]
 impl Campaign {
   #[private]
-  pub fn clear_state(&mut self, keys: Vec<Base58PublicKey>) -> ClearStatus {
+  pub fn clear_state(&mut self, keys: Vec<PublicKey>) -> ClearStatus {
     keys.into_iter().for_each(|pk| {
       let key = pk.into();
       self.keys.remove(&key);

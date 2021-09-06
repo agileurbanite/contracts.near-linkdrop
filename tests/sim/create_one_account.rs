@@ -31,14 +31,16 @@ fn create_one_account() {
   }
 
   // We want to sing transaction by new key;
-  let claim_signer =
-    InMemorySigner::from_secret_key(near_campaign.account_id(), SecretKey::from_str(SK).unwrap());
+  let claim_signer = InMemorySigner::from_secret_key(
+    near_campaign.account_id().into(),
+    SecretKey::from_str(SK).unwrap(),
+  );
   near_campaign.user_account.signer = claim_signer.clone();
 
   // Create a new account
   call!(
     near_campaign.user_account,
-    near_campaign.create_account_and_claim("john.testnet".to_string(), new_public_key)
+    near_campaign.create_account_and_claim("john.testnet".parse().unwrap(), new_public_key)
   );
 
   {
