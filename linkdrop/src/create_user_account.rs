@@ -4,12 +4,8 @@ use near_sdk::{AccountId, Gas, PublicKey};
 #[near_bindgen]
 impl Linkdrop {
   #[payable]
-  pub fn create_user_account(public_key: PublicKey) -> Promise {
-    let account_id = AccountId::new_unchecked(format!(
-      "{}.{}",
-      env::signer_account_id(),
-      env::current_account_id()
-    ));
+  pub fn create_user_account(name: AccountId, public_key: PublicKey) -> Promise {
+    let account_id = AccountId::new_unchecked(format!("{}.{}", name, env::current_account_id()));
 
     Promise::new(account_id)
       .create_account()
