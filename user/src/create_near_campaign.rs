@@ -7,7 +7,8 @@ impl User {
   #[payable]
   #[private]
   pub fn create_near_campaign(
-    name: AccountId,
+    &mut self,
+    name: String, // TODO Need to validate the name. NO '.', e.g 'my.campaign' has to be invalid
     public_key: PublicKey,
     tokens_per_key: U128,
   ) -> Promise {
@@ -21,7 +22,7 @@ impl User {
       .function_call(
         "new".to_string(),
         json!({
-          "campaign_id": 1,
+          "campaign_id": self.future_campaign_id,
           "tokens_per_key": tokens_per_key,
           "account_creator": "testnet"
         })
@@ -30,5 +31,10 @@ impl User {
         0,
         Gas(50_000_000_000_000),
       )
+      .then(ext_self_user::on_near_campaign_created(
+        env::current_account_id(),
+        0,
+        Gas(10_000_000_000_000),
+      ))
   }
 }

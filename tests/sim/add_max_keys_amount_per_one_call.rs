@@ -15,7 +15,7 @@ use std::str::FromStr;
 
 #[test]
 fn add_keys_fail() {
-  let (root, mut near_campaign) = init("5");
+  let (root, _, mut near_campaign) = init("5");
   let public_keys = get_public_keys(0, 49);
 
   let res = call!(

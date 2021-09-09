@@ -10,7 +10,7 @@ const SK: &str =
 
 #[test]
 fn create_one_account() {
-  let (root, mut near_campaign) = init("5");
+  let (root, _, mut near_campaign) = init("5");
   init_external_linkdrop(&root);
 
   let public_keys = get_public_keys(0, 0);
