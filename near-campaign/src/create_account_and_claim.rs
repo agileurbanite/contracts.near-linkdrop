@@ -17,17 +17,15 @@ impl Campaign {
 
     // TODO We need to check if the account was successfully created. Now the key will be deleted
     // even if we will get an error and the account wasn't created.
-    Promise::new(AccountId::new_unchecked(
-      EXTERNAL_LINKDROP_ACCOUNT.to_string(),
-    ))
-    .function_call(
-      "create_account".to_string(),
-      json!({ "new_account_id": new_account_id, "new_public_key": new_public_key })
-        .to_string()
-        .into_bytes(),
-      self.tokens_per_key,
-      Gas(50_000_000_000_000), // 50 Tgas
-    )
-    .then(Promise::new(env::current_account_id()).delete_key(key))
+    Promise::new(self.account_creator.clone())
+      .function_call(
+        "create_account".to_string(),
+        json!({ "new_account_id": new_account_id, "new_public_key": new_public_key })
+          .to_string()
+          .into_bytes(),
+        self.tokens_per_key,
+        Gas(50_000_000_000_000), // 50 Tgas
+      )
+      .then(Promise::new(env::current_account_id()).delete_key(key))
   }
 }

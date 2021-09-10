@@ -1,15 +1,14 @@
+use crate::*;
 use near_sdk::{Gas, PublicKey};
 
-use crate::*;
-
-// TODO Add last_campaign_id (1,2,3...) - need to use with path for generating keys
 // TODO Validate attached amount of NEAR, add total_keys field
 #[near_bindgen]
 impl User {
   #[payable]
   #[private]
   pub fn create_near_campaign(
-    name: AccountId,
+    &mut self,
+    name: String, // TODO Need to validate the name. NO '.', e.g 'my.campaign' has to be invalid
     public_key: PublicKey,
     tokens_per_key: U128,
   ) -> Promise {
@@ -22,11 +21,20 @@ impl User {
       .deploy_contract(NEAR_CAMPAIGN_WASM.to_vec())
       .function_call(
         "new".to_string(),
-        json!({ "tokens_per_key": tokens_per_key })
-          .to_string()
-          .into_bytes(),
+        json!({
+          "campaign_id": self.future_campaign_id,
+          "tokens_per_key": tokens_per_key,
+          "account_creator": "testnet"
+        })
+        .to_string()
+        .into_bytes(),
         0,
         Gas(50_000_000_000_000),
       )
+      .then(ext_self_user::on_near_campaign_created(
+        env::current_account_id(),
+        0,
+        Gas(10_000_000_000_000),
+      ))
   }
 }

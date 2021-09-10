@@ -4,10 +4,13 @@ use crate::*;
 #[derive(Serialize, Deserialize)]
 #[serde(crate = "near_sdk::serde")]
 pub struct Metadata {
+  campaign_id: u64,
   tokens_per_key: U128,
-  keys_stats: KeysStats,
   created_at: u64,
+  account_creator: AccountId,
+  keys_stats: KeysStats,
   status: String,
+  version: String,
 }
 
 #[near_bindgen]
@@ -21,10 +24,13 @@ impl Campaign {
     };
 
     Metadata {
+      campaign_id: self.campaign_id,
       tokens_per_key: self.tokens_per_key.into(),
-      keys_stats: self.keys_stats,
       created_at: self.created_at,
+      account_creator: self.account_creator,
+      keys_stats: self.keys_stats,
       status: status.to_string(),
+      version: self.version,
     }
   }
 }
