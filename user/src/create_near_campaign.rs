@@ -11,6 +11,7 @@ impl User {
     name: String, // TODO Need to validate the name. NO '.', e.g 'my.campaign' has to be invalid
     public_key: PublicKey,
     tokens_per_key: U128,
+    account_creator: AccountId,
   ) -> Promise {
     let campaign_id = AccountId::new_unchecked(format!("{}.{}", name, env::current_account_id()));
 
@@ -24,7 +25,7 @@ impl User {
         json!({
           "campaign_id": self.future_campaign_id,
           "tokens_per_key": tokens_per_key,
-          "account_creator": "testnet"
+          "account_creator": account_creator,
         })
         .to_string()
         .into_bytes(),
@@ -34,7 +35,7 @@ impl User {
       .then(ext_self_user::on_near_campaign_created(
         env::current_account_id(),
         0,
-        Gas(10_000_000_000_000),
+        Gas(25_000_000_000_000),
       ))
   }
 }

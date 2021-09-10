@@ -6,12 +6,12 @@ use crate::*;
 #[near_bindgen]
 impl Campaign {
   #[init]
-  pub fn new(campaign_id: u64, tokens_per_key: U128, account_creator: String) -> Self {
+  pub fn new(campaign_id: u64, tokens_per_key: U128, account_creator: AccountId) -> Self {
     Self {
       campaign_id,
       tokens_per_key: tokens_per_key.into(),
       created_at: env::block_timestamp(),
-      account_creator: AccountId::new_unchecked(account_creator),
+      account_creator,
       keys_stats: KeysStats {
         total: 0,
         active: 0,

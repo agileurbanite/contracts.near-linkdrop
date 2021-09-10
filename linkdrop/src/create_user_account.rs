@@ -1,6 +1,8 @@
 use crate::*;
 use near_sdk::{AccountId, Gas, PublicKey};
 
+// TODO Create callback for transfer funds back if user creation failed;
+
 #[near_bindgen]
 impl Linkdrop {
   #[payable]
