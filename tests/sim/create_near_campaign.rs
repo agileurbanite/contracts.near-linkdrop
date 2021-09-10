@@ -6,13 +6,13 @@
   unused_variables
 )]
 use crate::utils::{deploy_user_contract, get_contract_account, get_public_keys, init};
+use near_campaign::CampaignContract;
 use near_crypto::{InMemorySigner, SecretKey, Signer};
 use near_sdk::json_types::U128;
 use near_sdk::{AccountId, Balance, PublicKey};
 use near_sdk_sim::{call, to_yocto, view};
 use std::str::FromStr;
 use user::UserContract;
-use near_campaign::CampaignContract;
 
 // TODO Need to finish
 
@@ -30,7 +30,8 @@ fn create_near_campaign() {
     user.create_near_campaign(
       "my_campaign".to_string(),
       PublicKey::from_str(PK).unwrap(),
-      U128::from(to_yocto("1"))
+      U128::from(to_yocto("1")),
+      "testnet-1".parse().unwrap()
     ),
     deposit = to_yocto("10")
   );
@@ -38,7 +39,9 @@ fn create_near_campaign() {
   let my_campaign = get_contract_account(
     "my_campaign.bob",
     runtime.clone(),
-    CampaignContract { account_id: "my_campaign.bob".parse().unwrap() },
+    CampaignContract {
+      account_id: "my_campaign.bob".parse().unwrap(),
+    },
   );
 
   let res2 = call!(
@@ -46,7 +49,8 @@ fn create_near_campaign() {
     user.create_near_campaign(
       "other_campaign".to_string(),
       PublicKey::from_str(PK).unwrap(),
-      U128::from(to_yocto("0.5"))
+      U128::from(to_yocto("0.5")),
+      "testnet".parse().unwrap()
     ),
     deposit = to_yocto("10")
   );
@@ -56,7 +60,9 @@ fn create_near_campaign() {
   let other_campaign = get_contract_account(
     "other_campaign.bob",
     runtime.clone(),
-    CampaignContract { account_id: "other_campaign.bob".parse().unwrap() },
+    CampaignContract {
+      account_id: "other_campaign.bob".parse().unwrap(),
+    },
   );
 
   let r1 = view!(my_campaign.get_campaign_metadata());

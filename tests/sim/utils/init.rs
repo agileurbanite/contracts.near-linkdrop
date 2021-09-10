@@ -32,7 +32,7 @@ pub fn init(tokens_per_key: &str) -> (UserAccount, Runtime, ContractAccount<Near
 
   let campaign_id = 1;
   let tokens_per_keys = U128::from(to_yocto(tokens_per_key));
-  let account_creator = "testnet".to_string();
+  let account_creator = "testnet".parse().unwrap();
 
   let near_campaign = deploy!(
     contract: NearCampaign,
