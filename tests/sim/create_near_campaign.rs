@@ -5,7 +5,7 @@
   dead_code,
   unused_variables
 )]
-use crate::utils::{deploy_user_contract, get_contract_account, get_public_keys, init};
+use crate::utils::{deploy_user_contract, get_contract_account, init};
 use near_campaign::CampaignContract;
 use near_crypto::{InMemorySigner, SecretKey, Signer};
 use near_sdk::json_types::U128;

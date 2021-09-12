@@ -1,28 +1,22 @@
-use crate::utils::{get_public_keys, init};
-use near_crypto::{InMemorySigner, PublicKey, SecretKey, Signer};
+use crate::utils::{init_near_campaign, KeySet};
+use near_crypto::{InMemorySigner, Signer};
 use near_sdk_sim::{call, to_yocto};
-use std::str::FromStr;
-
-// TODO use keys via 'get_public_keys'
-const PK: &str = "8bFrYwXUEvLH5zkzGn2fG2bKjJu3kNNP4xXqsBvc2nJe";
-const SK: &str =
-  "39qnXSsiUUtuyMMJBkepa3qfv44qe6ZfixEMC9no1v6kjnaaKYj1pZ8pFmci1rSE9c2GsMVhF2NpXgu5aAYbCq3Y";
 
 #[test]
 fn claim_one_link() {
-  let (root, _, mut near_campaign) = init("5");
+  let (root, mut near_campaign) = init_near_campaign("5");
   let bob = root.create_user("bob".parse().unwrap(), to_yocto("10"));
-  let public_keys = get_public_keys(0, 0);
+  let key_set = KeySet::create(0, 0);
+  let (_, pk, sk) = key_set.some_keys(0);
 
   call!(
     near_campaign.user_account,
-    near_campaign.add_keys(public_keys)
+    near_campaign.add_keys(key_set.public_keys())
   );
 
   // Check if the key was added as functional call assess key
   {
     let runtime = root.borrow_runtime();
-    let pk = PublicKey::from_str(PK).unwrap();
     let key = runtime.view_access_key(near_campaign.account_id().as_str(), &pk);
     assert_eq!(key.is_some(), true);
   }
@@ -30,7 +24,7 @@ fn claim_one_link() {
   // We want to sing transaction by new key;
   let claim_signer = InMemorySigner::from_secret_key(
     near_campaign.account_id().into(),
-    SecretKey::from_str(SK).unwrap(),
+    sk,
   );
 
   near_campaign.user_account.signer = claim_signer.clone();
