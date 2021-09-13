@@ -8,8 +8,8 @@ use crate::*;
 #[derive(Serialize, Deserialize)]
 #[serde(crate = "near_sdk::serde")]
 pub struct Key {
-  pk: PublicKey,
-  status: Option<KeyStatus>,
+  pub pk: PublicKey,
+  pub status: Option<KeyStatus>,
 }
 
 #[near_bindgen]
