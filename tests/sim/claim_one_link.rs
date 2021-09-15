@@ -22,10 +22,7 @@ fn claim_one_link() {
   }
 
   // We want to sing transaction by new key;
-  let claim_signer = InMemorySigner::from_secret_key(
-    near_campaign.account_id().into(),
-    sk,
-  );
+  let claim_signer = InMemorySigner::from_secret_key(near_campaign.account_id().into(), sk);
 
   near_campaign.user_account.signer = claim_signer.clone();
 

@@ -1,11 +1,12 @@
 use crate::utils::{init_near_campaign, KeySet};
-use near_sdk_sim::{call, DEFAULT_GAS, UserAccount, ContractAccount};
+use near_sdk_sim::{call, ContractAccount, UserAccount, DEFAULT_GAS};
 
 fn get_contract_storage_usage<T>(root_user: &UserAccount, contract: &ContractAccount<T>) -> u64 {
   let runtime = root_user.borrow_runtime();
-  runtime.view_account(
-    contract.account_id().as_str()
-  ).unwrap().storage_usage
+  runtime
+    .view_account(contract.account_id().as_str())
+    .unwrap()
+    .storage_usage
 }
 
 #[test]
@@ -20,10 +21,7 @@ fn add_multiple_keys() {
   let (root, near_campaign) = init_near_campaign("5");
 
   // Add one key
-  let storage_usage_before_adding_one_key = get_contract_storage_usage(
-    &root,
-    &near_campaign
-  );
+  let storage_usage_before_adding_one_key = get_contract_storage_usage(&root, &near_campaign);
 
   let mut key_set = KeySet::create(0, 0);
   let mut result = call!(
@@ -33,10 +31,7 @@ fn add_multiple_keys() {
   );
   result.assert_success();
 
-  let storage_usage_after_adding_one_key = get_contract_storage_usage(
-    &root,
-    &near_campaign
-  );
+  let storage_usage_after_adding_one_key = get_contract_storage_usage(&root, &near_campaign);
   let storage_usage_per_one_key =
     storage_usage_after_adding_one_key - storage_usage_before_adding_one_key;
 
@@ -62,10 +57,7 @@ fn add_multiple_keys() {
   let (root, near_campaign) = init_near_campaign("5");
 
   // Add 200 keys
-  let storage_usage_at_begin = get_contract_storage_usage(
-    &root,
-    &near_campaign
-  );
+  let storage_usage_at_begin = get_contract_storage_usage(&root, &near_campaign);
 
   key_set = KeySet::create(0, number_of_keys as usize - 1);
   result = call!(
@@ -75,17 +67,11 @@ fn add_multiple_keys() {
   );
   result.assert_success();
 
-  let storage_usage_at_end = get_contract_storage_usage(
-    &root,
-    &near_campaign
-  );
+  let storage_usage_at_end = get_contract_storage_usage(&root, &near_campaign);
   let storage_usage_total = storage_usage_at_end - storage_usage_at_begin;
 
   {
-    println!(
-      "\nadd_multiple_keys > Number of keys: {}\n",
-      number_of_keys
-    );
+    println!("\nadd_multiple_keys > Number of keys: {}\n", number_of_keys);
     println!(
       "add_multiple_keys > Total TeraGas burnt: {}",
       result.gas_burnt().0 as f64 / 1e12
@@ -100,6 +86,9 @@ fn add_multiple_keys() {
       "add_multiple_keys > Total storage usage: {}",
       storage_usage_total
     );
-    assert_eq!(storage_usage_total, storage_usage_per_one_key * number_of_keys)
+    assert_eq!(
+      storage_usage_total,
+      storage_usage_per_one_key * number_of_keys
+    )
   }
 }

@@ -1,4 +1,4 @@
-use crate::utils::{init_user_contract, KeySet, assert_eq_with_gas};
+use crate::utils::{assert_eq_with_gas, init_user_contract, KeySet};
 use near_sdk::json_types::U128;
 use near_sdk_sim::{call, to_yocto};
 
@@ -13,11 +13,7 @@ fn create_near_campaign() {
   let (public_key, pub_key, _) = key_set.some_keys(0);
 
   let campaign_name = "new_campaign".to_string();
-  let campaign_account_id = format!(
-    "{}.{}",
-    campaign_name,
-    user_contract.account_id()
-  );
+  let campaign_account_id = format!("{}.{}", campaign_name, user_contract.account_id());
 
   let result = call!(
     user_contract.user_account,
@@ -35,28 +31,21 @@ fn create_near_campaign() {
     let runtime = root.borrow_runtime();
 
     // Check User balance
-    let user_balance = runtime.view_account(
-      user_contract.account_id().as_str()
-    ).unwrap().amount;
-    assert_eq_with_gas(
-      to_yocto("50"),
-      user_balance
-    );
+    let user_balance = runtime
+      .view_account(user_contract.account_id().as_str())
+      .unwrap()
+      .amount;
+    assert_eq_with_gas(to_yocto("50"), user_balance);
 
     // Check Campaign balance
-    let campaign_balance = runtime.view_account(
-      campaign_account_id.as_str()
-    ).unwrap().amount;
-    assert_eq_with_gas(
-      transfer_amount,
-      campaign_balance
-    );
+    let campaign_balance = runtime
+      .view_account(campaign_account_id.as_str())
+      .unwrap()
+      .amount;
+    assert_eq_with_gas(transfer_amount, campaign_balance);
 
     // Check New Campaign access key
-    let key = runtime.view_access_key(
-      campaign_account_id.as_str(),
-      &pub_key
-    );
+    let key = runtime.view_access_key(campaign_account_id.as_str(), &pub_key);
     assert_eq!(key.is_some(), true);
   }
 }

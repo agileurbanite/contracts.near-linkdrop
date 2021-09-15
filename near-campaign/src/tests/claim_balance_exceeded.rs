@@ -1,5 +1,5 @@
-use super::utils::{create_campaign, keys, get_context};
-use near_sdk::{testing_env};
+use super::utils::{create_campaign, get_context, keys};
+use near_sdk::testing_env;
 
 #[test]
 #[should_panic(expected = r#"BalanceExceeded"#)]

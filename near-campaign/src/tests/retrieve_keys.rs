@@ -1,7 +1,7 @@
-use super::utils::{create_campaign, keys, get_context};
-use near_sdk::testing_env;
+use super::utils::{create_campaign, get_context, keys};
 use crate::get_keys::Key;
 use crate::KeyStatus;
+use near_sdk::testing_env;
 
 #[test]
 fn retrieve_keys() {

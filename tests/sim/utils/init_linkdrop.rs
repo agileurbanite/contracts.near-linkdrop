@@ -1,9 +1,7 @@
 use linkdrop::LinkdropContract;
 use near_sdk::AccountId;
 use near_sdk_sim::runtime::GenesisConfig;
-use near_sdk_sim::{
-  deploy, init_simulator, lazy_static_include, ContractAccount, UserAccount
-};
+use near_sdk_sim::{deploy, init_simulator, lazy_static_include, ContractAccount, UserAccount};
 
 lazy_static_include::lazy_static_include_bytes! {
    LINKDROP_WASM_BYTES => "wasm/linkdrop.wasm"
@@ -11,9 +9,9 @@ lazy_static_include::lazy_static_include_bytes! {
 
 const CONTRACT_ID: &str = "linkdrop";
 
-pub fn init_linkdrop(initial_balance: u128) ->
-        (UserAccount, ContractAccount<LinkdropContract>, UserAccount)
-{
+pub fn init_linkdrop(
+  initial_balance: u128,
+) -> (UserAccount, ContractAccount<LinkdropContract>, UserAccount) {
   let genesis = GenesisConfig::default();
   let root = init_simulator(Some(genesis));
 
@@ -26,7 +24,7 @@ pub fn init_linkdrop(initial_balance: u128) ->
 
   let alice = root.create_user(
     AccountId::new_unchecked("alice".to_string()),
-    initial_balance
+    initial_balance,
   );
 
   (root, linkdrop, alice)

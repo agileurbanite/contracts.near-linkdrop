@@ -1,4 +1,4 @@
-use super::utils::{create_campaign, keys, get_context};
+use super::utils::{create_campaign, get_context, keys};
 use near_sdk::{testing_env, AccountId};
 
 #[test]
