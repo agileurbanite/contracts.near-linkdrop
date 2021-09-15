@@ -9,6 +9,7 @@ mod add_keys;
 mod claim;
 mod clear_state;
 mod create_account_and_claim;
+mod delete_campaign;
 mod get_campaign_metadata;
 mod get_key_balance;
 mod get_keys;
@@ -40,14 +41,17 @@ pub struct KeysStats {
 }
 
 /*
-  account_creator - account of the original linkdrop (root account) 'testnet' in testnet
-  and 'near' in mainnet
- */
+   `campaign_id` - internal id for correct key generation on the frontend.
+   `user_id` - linkdrop user account id who created this campaign.
+   `account_creator` - account of the original linkdrop (root account) 'testnet' in testnet
+    and 'near' in mainnet.
+*/
 
 #[near_bindgen]
 #[derive(BorshSerialize, BorshDeserialize, PanicOnDefault)]
 pub struct Campaign {
   campaign_id: u64,
+  user_id: AccountId,
   tokens_per_key: Balance,
   created_at: u64,
   account_creator: AccountId,

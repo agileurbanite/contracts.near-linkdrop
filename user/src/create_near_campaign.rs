@@ -26,6 +26,7 @@ impl User {
           "campaign_id": self.future_campaign_id,
           "tokens_per_key": tokens_per_key,
           "account_creator": account_creator,
+          "user_id": env::current_account_id()
         })
         .to_string()
         .into_bytes(),
@@ -33,6 +34,7 @@ impl User {
         Gas(50_000_000_000_000),
       )
       .then(ext_self_user::on_near_campaign_created(
+        campaign_id,
         env::current_account_id(),
         0,
         Gas(25_000_000_000_000),
