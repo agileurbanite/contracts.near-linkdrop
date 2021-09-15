@@ -1,4 +1,4 @@
-use crate::utils::{init_near_campaign, init_external_linkdrop, KeySet};
+use crate::utils::{init_external_linkdrop, init_near_campaign, KeySet};
 use near_crypto::{InMemorySigner, Signer};
 use near_sdk_sim::{call, to_yocto};
 
@@ -17,10 +17,7 @@ fn create_one_account_and_claim() {
   );
 
   // We want to sing transaction by new key;
-  let claim_signer = InMemorySigner::from_secret_key(
-    near_campaign.account_id().into(),
-    sk,
-  );
+  let claim_signer = InMemorySigner::from_secret_key(near_campaign.account_id().into(), sk);
   near_campaign.user_account.signer = claim_signer.clone();
 
   // Create a new account

@@ -1,6 +1,8 @@
-use crate::utils::{init_near_campaign, KeySet, assert_eq_with_gas, assert_almost_eq_with_max_delta};
-use near_sdk_sim::{call, to_yocto, DEFAULT_GAS};
+use crate::utils::{
+  assert_almost_eq_with_max_delta, assert_eq_with_gas, init_near_campaign, KeySet,
+};
 use near_sdk::AccountId;
+use near_sdk_sim::{call, to_yocto, DEFAULT_GAS};
 
 #[test]
 fn refund_multiple_keys() {
@@ -21,7 +23,7 @@ fn refund_multiple_keys() {
   // Create beneficiary account
   let alice = root.create_user(
     AccountId::new_unchecked("alice".to_string()),
-    to_yocto("10")
+    to_yocto("10"),
   );
 
   // Tokens refund
@@ -36,36 +38,29 @@ fn refund_multiple_keys() {
     let runtime = root.borrow_runtime();
 
     // Check Alice balance
-    let alice_balance = runtime.view_account(
-      "alice"
-    ).unwrap().amount;
+    let alice_balance = runtime.view_account("alice").unwrap().amount;
     assert_eq_with_gas(
       to_yocto("60"), // 10 + 10 * 5 NEAR
-      alice_balance
+      alice_balance,
     );
 
     // Check Campaign balance
-    let campaign_balance = runtime.view_account(
-      near_campaign.account_id().as_str()
-    ).unwrap().amount;
+    let campaign_balance = runtime
+      .view_account(near_campaign.account_id().as_str())
+      .unwrap()
+      .amount;
     assert_almost_eq_with_max_delta(
       to_yocto("150"), // 200 - 10 * 5 NEAR
       campaign_balance,
-      to_yocto("0.01")
+      to_yocto("0.01"),
     );
 
     // Check first Campaign access key
-    let mut key = runtime.view_access_key(
-      near_campaign.account_id().as_str(),
-      &pk_first
-    );
+    let mut key = runtime.view_access_key(near_campaign.account_id().as_str(), &pk_first);
     assert_eq!(key.is_none(), true);
 
     // Check last Campaign access key
-    key = runtime.view_access_key(
-      near_campaign.account_id().as_str(),
-      &pk_last
-    );
+    key = runtime.view_access_key(near_campaign.account_id().as_str(), &pk_last);
     assert_eq!(key.is_none(), true);
 
     // Check TeraGas burnt

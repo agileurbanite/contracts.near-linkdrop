@@ -1,6 +1,6 @@
 use crate::utils::{init_near_campaign, KeySet};
-use near_sdk_sim::call;
 use near_sdk_sim::account::AccessKeyPermission;
+use near_sdk_sim::call;
 
 #[test]
 fn add_one_key() {
@@ -16,10 +16,7 @@ fn add_one_key() {
   {
     let runtime = root.borrow_runtime();
 
-    let key = runtime.view_access_key(
-      near_campaign.account_id().as_str(),
-      &pk
-    );
+    let key = runtime.view_access_key(near_campaign.account_id().as_str(), &pk);
     assert_eq!(key.is_some(), true);
 
     // Was the key added as a functional call assess key ?

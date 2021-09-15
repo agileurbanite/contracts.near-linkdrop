@@ -19,7 +19,12 @@ pub fn init_near_campaign(tokens_per_key: &str) -> (UserAccount, ContractAccount
     bytes: &NEAR_CAMPAIGN,
     signer_account: root,
     deposit: to_yocto("200"),
-    init_method: new(1, U128::from(to_yocto(tokens_per_key)), "testnet".parse().unwrap())
+    init_method: new(
+      1,
+      U128::from(to_yocto(tokens_per_key)),
+      "testnet".parse().unwrap(),
+      "alice.linkdrop".parse().unwrap()
+    )
   );
 
   (root, near_campaign)

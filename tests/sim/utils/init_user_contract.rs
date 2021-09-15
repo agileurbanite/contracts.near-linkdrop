@@ -1,8 +1,6 @@
-use user::UserContract;
 use near_sdk_sim::runtime::GenesisConfig;
-use near_sdk_sim::{
-  deploy, init_simulator, lazy_static_include, ContractAccount, UserAccount
-};
+use near_sdk_sim::{deploy, init_simulator, lazy_static_include, ContractAccount, UserAccount};
+use user::UserContract;
 
 lazy_static_include::lazy_static_include_bytes! {
    USER_WASM_BYTES => "wasm/user.wasm"

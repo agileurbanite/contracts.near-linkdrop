@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-cd ../../../linkdrop
+cd ../../../contracts/linkdrop
 cargo build --target wasm32-unknown-unknown --release
-cp ../target/wasm32-unknown-unknown/release/linkdrop.wasm ../wasm
+cp ../../target/wasm32-unknown-unknown/release/linkdrop.wasm ../../wasm

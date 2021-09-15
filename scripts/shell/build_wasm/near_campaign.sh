@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-cd ../../../near-campaign
+cd ../../../contracts/near-campaign
 cargo build --target wasm32-unknown-unknown --release
-cp ../target/wasm32-unknown-unknown/release/near_campaign.wasm ../wasm
+cp ../../target/wasm32-unknown-unknown/release/near_campaign.wasm ../../wasm

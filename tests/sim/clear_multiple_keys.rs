@@ -29,17 +29,11 @@ fn clear_multiple_keys() {
     let runtime = root.borrow_runtime();
 
     // Check first Campaign access key
-    let mut key = runtime.view_access_key(
-      near_campaign.account_id().as_str(),
-      &pk_first
-    );
+    let mut key = runtime.view_access_key(near_campaign.account_id().as_str(), &pk_first);
     assert_eq!(key.is_none(), true);
 
     // Check last Campaign access key
-    key = runtime.view_access_key(
-      near_campaign.account_id().as_str(),
-      &pk_last
-    );
+    key = runtime.view_access_key(near_campaign.account_id().as_str(), &pk_last);
     assert_eq!(key.is_none(), true);
 
     // Check TeraGas burnt

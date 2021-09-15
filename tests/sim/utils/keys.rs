@@ -405,36 +405,46 @@ const SEC_KEYS: [&str; 200] = [
   "tnYyDT1LALbBg8qNgJRnDxKqgauuYtB1GgzcPpa8UmvC5z39BmXZc5JfHQ9dQY8WmWX5ct3W5d2TRaFc6AYqWZrM",
   "t2e5c13jqsy3GPF75JmtB7WxvnUVyZ5XVE2YNAM3u3CBmLNL7YnAtosEFXngETQ9RqeoHHRobcWThSwjgu1ceE3ev",
   "ta2kxnyUQeQvvLQo7ZqYMCdbQmCitum8KrJGCpkqti9Sw5aL54cbJP7mqzqDWA528adFwuJtUHYo5nT2Lzg42Cig",
-  "t2oGtCgTnsh7avZGqBKrw3gNy17S73842hRKbZCBwEFwN3zjWMUPVeN8yrfr1VcVj3Eg7fxTnJg5CaHztqd2ESiNu"
+  "t2oGtCgTnsh7avZGqBKrw3gNy17S73842hRKbZCBwEFwN3zjWMUPVeN8yrfr1VcVj3Eg7fxTnJg5CaHztqd2ESiNu",
 ];
 
 pub struct KeySet {
   set_pk: Vec<String>,
-  set_sk: Vec<String>
+  set_sk: Vec<String>,
 }
 
 impl KeySet {
   pub fn create(from: usize, to: usize) -> Self {
     Self {
       set_pk: KEYS[from..=to].iter().map(|p| p.to_string()).collect(),
-      set_sk: SEC_KEYS[from..=to].iter().map(|s| s.to_string()).collect()
+      set_sk: SEC_KEYS[from..=to].iter().map(|s| s.to_string()).collect(),
     }
   }
 
   pub fn public_keys(&self) -> Vec<PublicKey> {
-    self.set_pk.iter().map(|p| p.as_str().parse().unwrap()).collect()
+    self
+      .set_pk
+      .iter()
+      .map(|p| p.as_str().parse().unwrap())
+      .collect()
   }
 
-  pub fn some_keys(&self, index: usize) -> (near_sdk::PublicKey, near_crypto::PublicKey, SecretKey)
-  {
+  pub fn some_keys(
+    &self,
+    index: usize,
+  ) -> (near_sdk::PublicKey, near_crypto::PublicKey, SecretKey) {
     let pk: &str = match self.set_pk.get(index) {
       Some(p) => p.as_str(),
-      _ => panic!("Invalid index")
+      _ => panic!("Invalid index"),
     };
     let sk: &str = match self.set_sk.get(index) {
       Some(s) => s.as_str(),
-      _ => panic!("Invalid index")
+      _ => panic!("Invalid index"),
     };
-    (pk.parse().unwrap(), PubKey::from_str(pk).unwrap(), sk.parse().unwrap())
+    (
+      pk.parse().unwrap(),
+      PubKey::from_str(pk).unwrap(),
+      sk.parse().unwrap(),
+    )
   }
 }
