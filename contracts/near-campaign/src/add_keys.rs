@@ -4,13 +4,20 @@ use crate::*;
 impl Campaign {
   #[private]
   pub fn add_keys(&mut self, keys: Vec<PublicKey>) {
-    // TODO this doesn't handle overlap of keys that already exist in the map?
+    assert_eq!(
+      self.status,
+      CampaignStatus::Creation,
+      "Unable to call add_keys after creating a campaign"
+    );
+
     keys.into_iter().for_each(|key| {
-      // TODO do we need to check if key is already added to the state?
-      // TODO: use callback for this?
       self.keys.insert(&key, &KeyStatus::Active);
-      self.keys_stats.total += 1;
+      self.keys_stats.added_during_creation += 1;
       self.keys_stats.active += 1;
+
+      if self.keys_stats.total == self.keys_stats.added_during_creation {
+        self.status = CampaignStatus::Active;
+      }
 
       Promise::new(env::current_account_id()).add_access_key(
         key,

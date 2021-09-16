@@ -6,6 +6,7 @@ use near_sdk::serde_json::json;
 use near_sdk::{env, near_bindgen, AccountId, Balance, PanicOnDefault, Promise, PublicKey};
 
 mod add_keys;
+// mod add_keys_test;
 mod claim;
 mod clear_state;
 mod create_account_and_claim;
@@ -18,6 +19,15 @@ mod refund_keys;
 
 #[cfg(test)]
 mod tests;
+
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, PartialEq, Debug)]
+#[serde(crate = "near_sdk::serde")]
+pub enum CampaignStatus {
+  Creation,
+  Active,
+  Completed,
+  Deletion,
+}
 
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, PartialEq, Debug)]
 #[serde(crate = "near_sdk::serde")]
@@ -34,6 +44,8 @@ pub enum KeyStatus {
 #[serde(crate = "near_sdk::serde")]
 pub struct KeysStats {
   total: u64,
+  added_during_creation: u64,
+  deleted_during_deletion: u64,
   active: u64,
   created: u64,
   claimed: u64,
@@ -57,5 +69,6 @@ pub struct Campaign {
   account_creator: AccountId,
   keys_stats: KeysStats,
   keys: UnorderedMap<PublicKey, KeyStatus>,
+  status: CampaignStatus,
   version: String,
 }

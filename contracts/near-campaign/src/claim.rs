@@ -11,11 +11,6 @@ use crate::*;
 impl Campaign {
   #[private]
   pub fn claim(&mut self, account_id: AccountId) -> Promise {
-    assert!(
-      env::is_valid_account_id(account_id.as_bytes()),
-      "Invalid account id"
-    );
-
     // TODO do we need to check that the key is the functional call access key?
     // Right now it is possible to call this method with full-access key and it will cause
     // we won't be able to delete the account and return tokens back to the owner.
@@ -25,6 +20,10 @@ impl Campaign {
     self.keys.insert(&key, &KeyStatus::Claimed);
     self.keys_stats.active -= 1;
     self.keys_stats.claimed += 1;
+
+    if self.keys_stats.active == 0 {
+      self.status = CampaignStatus::Completed;
+    };
 
     Promise::new(env::current_account_id())
       .delete_key(key)

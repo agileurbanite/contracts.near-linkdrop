@@ -15,6 +15,10 @@ impl Campaign {
     self.keys_stats.active -= 1;
     self.keys_stats.created += 1;
 
+    if self.keys_stats.active == 0 {
+      self.status = CampaignStatus::Completed;
+    };
+
     // TODO We need to check if the account was successfully created. Now the key will be deleted
     // even if we will get an error and the account wasn't created.
     Promise::new(self.account_creator.clone())

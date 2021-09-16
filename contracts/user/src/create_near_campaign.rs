@@ -1,7 +1,6 @@
 use crate::*;
 use near_sdk::{Gas, PublicKey};
 
-// TODO Validate attached amount of NEAR, add total_keys field
 #[near_bindgen]
 impl User {
   #[payable]
@@ -10,6 +9,7 @@ impl User {
     &mut self,
     name: String, // TODO Need to validate the name. NO '.', e.g 'my.campaign' has to be invalid
     public_key: PublicKey,
+    total_keys: u64,
     tokens_per_key: U128,
     account_creator: AccountId,
   ) -> Promise {
@@ -24,6 +24,7 @@ impl User {
         "new".to_string(),
         json!({
           "campaign_id": self.future_campaign_id,
+          "total_keys": total_keys,
           "tokens_per_key": tokens_per_key,
           "account_creator": account_creator,
           "user_id": env::current_account_id()

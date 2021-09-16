@@ -9,7 +9,10 @@ lazy_static_include::lazy_static_include_bytes! {
    NEAR_CAMPAIGN => "wasm/near_campaign.wasm"
 }
 
-pub fn init_near_campaign(tokens_per_key: &str) -> (UserAccount, ContractAccount<NearCampaign>) {
+pub fn init_near_campaign(
+  total_keys: u64,
+  tokens_per_key: &str,
+) -> (UserAccount, ContractAccount<NearCampaign>) {
   let genesis = GenesisConfig::default();
   let root = init_simulator(Some(genesis));
 
@@ -21,6 +24,7 @@ pub fn init_near_campaign(tokens_per_key: &str) -> (UserAccount, ContractAccount
     deposit: to_yocto("200"),
     init_method: new(
       1,
+      total_keys,
       U128::from(to_yocto(tokens_per_key)),
       "testnet".parse().unwrap(),
       "alice.linkdrop".parse().unwrap()
