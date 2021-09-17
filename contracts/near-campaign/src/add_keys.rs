@@ -11,6 +11,8 @@ impl Campaign {
     );
 
     keys.into_iter().for_each(|key| {
+      assert_eq!(self.keys.get(&key), None, "Key is already exists");
+
       self.keys.insert(&key, &KeyStatus::Active);
       self.keys_stats.added_during_creation += 1;
       self.keys_stats.active += 1;
@@ -21,7 +23,7 @@ impl Campaign {
 
       Promise::new(env::current_account_id()).add_access_key(
         key,
-        1_000_000_000_000_000_000_000_000, // 1 NEAR TODO Should we use an unlimited amount?
+        1_000_000_000_000_000_000_000_000, // 1 NEAR
         env::current_account_id(),
         "create_account_and_claim,claim".to_string(),
       );

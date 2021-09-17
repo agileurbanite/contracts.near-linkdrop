@@ -17,11 +17,13 @@ impl Campaign {
       "Unable to call this method on inactive campaign"
     );
 
-    // TODO do we need to check that the key is the functional call access key?
-    // Right now it is possible to call this method with full-access key and it will cause
-    // we won't be able to delete the account and return tokens back to the owner.
-
     let key = env::signer_account_pk();
+
+    assert_eq!(
+      self.keys.get(&key),
+      Some(KeyStatus::Active),
+      "Cannot claim by inactive or non-existing key"
+    );
 
     self.keys.insert(&key, &KeyStatus::Claimed);
     self.keys_stats.active -= 1;

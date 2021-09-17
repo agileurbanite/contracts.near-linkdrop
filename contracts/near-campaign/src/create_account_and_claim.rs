@@ -17,6 +17,12 @@ impl Campaign {
 
     let key = env::signer_account_pk();
 
+    assert_eq!(
+      self.keys.get(&key),
+      Some(KeyStatus::Active),
+      "Cannot create account by inactive or non-existing key"
+    );
+
     self.keys.insert(&key, &KeyStatus::Created);
     self.keys_stats.active -= 1;
     self.keys_stats.created += 1;
@@ -25,8 +31,6 @@ impl Campaign {
       self.status = CampaignStatus::Completed;
     };
 
-    // TODO We need to check if the account was successfully created. Now the key will be deleted
-    // even if we will get an error and the account wasn't created.
     Promise::new(self.account_creator.clone())
       .function_call(
         "create_account".to_string(),
