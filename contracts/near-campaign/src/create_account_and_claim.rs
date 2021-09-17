@@ -9,14 +9,28 @@ impl Campaign {
     new_account_id: AccountId,
     new_public_key: PublicKey,
   ) -> Promise {
+    assert_eq!(
+      self.status,
+      CampaignStatus::Active,
+      "Unable to call this method on inactive campaign"
+    );
+
     let key = env::signer_account_pk();
+
+    assert_eq!(
+      self.keys.get(&key),
+      Some(KeyStatus::Active),
+      "Cannot create account by inactive or non-existing key"
+    );
 
     self.keys.insert(&key, &KeyStatus::Created);
     self.keys_stats.active -= 1;
     self.keys_stats.created += 1;
 
-    // TODO We need to check if the account was successfully created. Now the key will be deleted
-    // even if we will get an error and the account wasn't created.
+    if self.keys_stats.active == 0 {
+      self.status = CampaignStatus::Completed;
+    };
+
     Promise::new(self.account_creator.clone())
       .function_call(
         "create_account".to_string(),

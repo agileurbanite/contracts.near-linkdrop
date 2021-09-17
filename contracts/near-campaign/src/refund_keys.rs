@@ -4,12 +4,28 @@ use crate::*;
 impl Campaign {
   #[private]
   pub fn refund_keys(&mut self, keys: Vec<PublicKey>, beneficiary_id: AccountId) {
-    keys.iter().for_each(|pk| {
+    assert_eq!(
+      self.status,
+      CampaignStatus::Active,
+      "Unable to call this method on inactive campaign"
+    );
+
+    keys.into_iter().for_each(|pk| {
       let key = pk.clone().into();
+
+      assert_eq!(
+        self.keys.get(&key),
+        Some(KeyStatus::Active),
+        "Cannot refund inactive or non-existing key"
+      );
 
       self.keys.insert(&key, &KeyStatus::Refunded);
       self.keys_stats.active -= 1;
       self.keys_stats.refunded += 1;
+
+      if self.keys_stats.active == 0 {
+        self.status = CampaignStatus::Completed;
+      };
 
       Promise::new(env::current_account_id())
         .delete_key(key)

@@ -2,7 +2,6 @@ use super::utils::{create_campaign, get_context, keys};
 use crate::*;
 use near_sdk::testing_env;
 
-// TODO How to check if it was added an access key?
 #[test]
 fn add_one_key() {
   testing_env!(get_context());
