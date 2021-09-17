@@ -6,7 +6,6 @@ use near_sdk::serde_json::json;
 use near_sdk::{env, near_bindgen, AccountId, Balance, PanicOnDefault, Promise, PublicKey};
 
 mod add_keys;
-// mod add_keys_test;
 mod claim;
 mod clear_state;
 mod create_account_and_claim;
