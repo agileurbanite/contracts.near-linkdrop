@@ -9,6 +9,12 @@ impl Campaign {
     new_account_id: AccountId,
     new_public_key: PublicKey,
   ) -> Promise {
+    assert_eq!(
+      self.status,
+      CampaignStatus::Active,
+      "Unable to call this method on inactive campaign"
+    );
+
     let key = env::signer_account_pk();
 
     self.keys.insert(&key, &KeyStatus::Created);

@@ -11,6 +11,12 @@ use crate::*;
 impl Campaign {
   #[private]
   pub fn claim(&mut self, account_id: AccountId) -> Promise {
+    assert_eq!(
+      self.status,
+      CampaignStatus::Active,
+      "Unable to call this method on inactive campaign"
+    );
+
     // TODO do we need to check that the key is the functional call access key?
     // Right now it is possible to call this method with full-access key and it will cause
     // we won't be able to delete the account and return tokens back to the owner.

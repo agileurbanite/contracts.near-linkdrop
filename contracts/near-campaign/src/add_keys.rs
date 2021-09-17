@@ -7,7 +7,7 @@ impl Campaign {
     assert_eq!(
       self.status,
       CampaignStatus::Creation,
-      "Unable to call add_keys after creating a campaign"
+      "Unable to call this method after creating a campaign"
     );
 
     keys.into_iter().for_each(|key| {
