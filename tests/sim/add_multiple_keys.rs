@@ -15,10 +15,10 @@ fn add_multiple_keys() {
   let tera_gas = u64::pow(10, 12);
 
   let expected_gas_by_adding_one_key: u64 = tera_gas * 4; // 4 TeraGas
-  let expected_gas_ceiling: u64 = tera_gas * 180; // 180 TeraGas
+  let expected_gas_ceiling: u64 = tera_gas * 200; // 200 TeraGas
   let expected_storage_usage_per_one_key: u64 = 390; // bytes
 
-  let (root, near_campaign) = init_near_campaign("5");
+  let (root, near_campaign) = init_near_campaign(1, "5");
 
   // Add one key
   let storage_usage_before_adding_one_key = get_contract_storage_usage(&root, &near_campaign);
@@ -54,7 +54,7 @@ fn add_multiple_keys() {
   }
 
   // Re-initialization of the environment
-  let (root, near_campaign) = init_near_campaign("5");
+  let (root, near_campaign) = init_near_campaign(number_of_keys, "5");
 
   // Add 200 keys
   let storage_usage_at_begin = get_contract_storage_usage(&root, &near_campaign);

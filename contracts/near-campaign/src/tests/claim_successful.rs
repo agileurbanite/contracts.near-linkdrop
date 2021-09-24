@@ -16,6 +16,7 @@ fn claim_successful() {
 
   let mut contract = create_campaign();
   contract.add_keys(keys.clone());
+  assert_eq!(CampaignStatus::Active, contract.status);
 
   contract.claim("c.testnet".parse().unwrap());
 
@@ -24,7 +25,7 @@ fn claim_successful() {
     contract.keys.get(&keys[0].clone().into())
   );
   assert_eq!(1, contract.keys.len());
-  assert_eq!(1, contract.keys_stats.total);
   assert_eq!(1, contract.keys_stats.claimed);
   assert_eq!(0, contract.keys_stats.active);
+  assert_eq!(CampaignStatus::Completed, contract.status)
 }

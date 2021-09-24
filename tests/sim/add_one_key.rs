@@ -4,7 +4,7 @@ use near_sdk_sim::call;
 
 #[test]
 fn add_one_key() {
-  let (root, near_campaign) = init_near_campaign("5");
+  let (root, near_campaign) = init_near_campaign(1, "5");
   let key_set = KeySet::create(0, 0);
   let (_, pk, _) = key_set.some_keys(0);
 

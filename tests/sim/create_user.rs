@@ -3,10 +3,10 @@ use near_sdk_sim::{call, to_yocto};
 
 #[test]
 fn create_user() {
-  let initial_balance = to_yocto("200");
+  let alice_initial_balance = to_yocto("200");
   let transfer_amount = to_yocto("100");
 
-  let (root, linkdrop, alice) = init_linkdrop(initial_balance);
+  let (root, linkdrop, alice) = init_linkdrop(alice_initial_balance);
   let key_set = KeySet::create(0, 0);
   let (public_key, pub_key, _) = key_set.some_keys(0);
   let new_account_id = "alice.linkdrop";
@@ -26,7 +26,10 @@ fn create_user() {
       .view_account(alice.account_id.as_str())
       .unwrap()
       .amount;
-    assert_eq_with_gas(to_yocto("100"), alice_balance);
+    assert_eq_with_gas(
+      to_yocto("100"), // 200 - 100 NEAR
+      alice_balance
+    );
 
     // Check Alice Linkdrop balance
     let alice_linkdrop_balance = runtime.view_account(new_account_id).unwrap().amount;

@@ -13,6 +13,9 @@ mod on_near_campaign_deleted;
 
 const NEAR_CAMPAIGN_WASM: &[u8] = include_bytes!("../../../wasm/near_campaign.wasm");
 
+#[cfg(test)]
+mod tests;
+
 #[ext_contract(ext_self_user)]
 pub trait ExtSelfUser {
   fn on_near_campaign_created(&mut self, campaign_id: AccountId) -> bool;

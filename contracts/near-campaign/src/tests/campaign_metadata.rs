@@ -9,6 +9,8 @@ fn campaign_metadata() {
   let last_block_timestamp = env::block_timestamp();
 
   let mut contract = create_campaign();
+  // It is planned to add 10 keys
+  contract.keys_stats.total = 10;
   contract.add_keys(keys);
   // The 'create_account_and_claim' method was executed for one key
   contract.keys_stats.active -= 1;
@@ -21,7 +23,7 @@ fn campaign_metadata() {
     metadata.tokens_per_key
   );
   assert!(metadata.created_at >= last_block_timestamp);
-  assert_eq!("active", metadata.status);
+  assert_eq!(CampaignStatus::Active, metadata.status);
   assert_eq!(1, metadata.campaign_id);
   assert_eq!(
     AccountId::new_unchecked("testnet".to_string()),
@@ -32,7 +34,6 @@ fn campaign_metadata() {
     metadata.user_id
   );
   assert_eq!("1.0".to_string(), metadata.version);
-  assert_eq!(10, metadata.keys_stats.total);
   assert_eq!(9, metadata.keys_stats.active);
   assert_eq!(1, metadata.keys_stats.created);
 }
