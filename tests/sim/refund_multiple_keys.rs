@@ -1,6 +1,7 @@
 use crate::utils::{
   assert_almost_eq_with_max_delta, assert_eq_with_gas, init_near_campaign, KeySet,
 };
+use near_campaign::get_campaign_metadata::Metadata;
 use near_sdk::AccountId;
 use near_sdk_sim::{call, view, to_yocto, DEFAULT_GAS};
 
@@ -64,16 +65,9 @@ fn refund_multiple_keys() {
     assert_eq!(key.is_none(), true);
 
     // Check key statuses
-    let value = view!(near_campaign.get_campaign_metadata()).unwrap_json_value();
-    let key_stats = value
-      .as_object()
-      .unwrap()
-      .get("keys_stats")
-      .unwrap()
-      .as_object()
-      .unwrap();
-    assert_eq!(0, key_stats.get("active").unwrap().as_u64().unwrap());
-    assert_eq!(10, key_stats.get("refunded").unwrap().as_u64().unwrap());
+    let metadata: Metadata = view!(near_campaign.get_campaign_metadata()).unwrap_json();
+    assert_eq!(0, metadata.keys_stats.active);
+    assert_eq!(10, metadata.keys_stats.refunded);
 
     // Check TeraGas burnt
     println!(

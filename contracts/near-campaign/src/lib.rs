@@ -7,12 +7,12 @@ use near_sdk::{env, near_bindgen, AccountId, Balance, PanicOnDefault, Promise, P
 
 mod add_keys;
 mod claim;
-mod clear_state;
+pub mod clear_state;
 mod create_account_and_claim;
 mod delete_campaign;
-mod get_campaign_metadata;
+pub mod get_campaign_metadata;
 mod get_key_balance;
-mod get_keys;
+pub mod get_keys;
 mod new;
 mod refund_keys;
 
@@ -42,13 +42,13 @@ pub enum KeyStatus {
 )]
 #[serde(crate = "near_sdk::serde")]
 pub struct KeysStats {
-  total: u64,
-  added_during_creation: u64,
-  deleted_during_deletion: u64,
-  active: u64,
-  created: u64,
-  claimed: u64,
-  refunded: u64,
+  pub total: u64,
+  pub added_during_creation: u64,
+  pub deleted_during_deletion: u64,
+  pub active: u64,
+  pub created: u64,
+  pub claimed: u64,
+  pub refunded: u64,
 }
 
 /*

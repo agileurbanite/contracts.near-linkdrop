@@ -1,4 +1,5 @@
 use crate::utils::{assert_one_promise_error, init_near_campaign, KeySet};
+use near_campaign::get_campaign_metadata::Metadata;
 use near_sdk_sim::{call, view, DEFAULT_GAS};
 
 #[test]
@@ -44,14 +45,7 @@ fn add_existing_keys() {
     assert_eq!(key.is_none(), true);
 
     // Check the state of the contract
-    let value = view!(near_campaign.get_campaign_metadata()).unwrap_json_value();
-    let key_stats = value
-      .as_object()
-      .unwrap()
-      .get("keys_stats")
-      .unwrap()
-      .as_object()
-      .unwrap();
-    assert_eq!(1, key_stats.get("active").unwrap().as_u64().unwrap());
+    let metadata: Metadata = view!(near_campaign.get_campaign_metadata()).unwrap_json();
+    assert_eq!(1, metadata.keys_stats.active);
   }
 }

@@ -1,4 +1,6 @@
 use crate::utils::{init_near_campaign, KeySet};
+use near_campaign::clear_state::ClearStatus;
+use near_campaign::get_keys::Key;
 use near_sdk_sim::{call, view, DEFAULT_GAS};
 
 #[test]
@@ -37,26 +39,21 @@ fn clear_multiple_keys() {
     assert_eq!(key.is_none(), true);
 
     // Check cleaning status
-    let mut value = result.unwrap_json_value();
-    let clear_status = value.as_object().unwrap().get("Completed").unwrap().as_bool().unwrap();
-    assert_eq!(clear_status, true);
+    let clear_status: ClearStatus = result.unwrap_json();
+    match clear_status {
+      ClearStatus::Completed(status) => assert_eq!(status, true),
+    };
 
     // All keys have no status
-    value = view!(near_campaign.get_keys(key_set.public_keys())).unwrap_json_value();
-    let keys = value
-      .as_array()
-      .unwrap();
+    let keys: Vec<Key> = view!(near_campaign.get_keys(key_set.public_keys())).unwrap_json();
     assert_eq!(100, keys.len());
-    keys
-      .into_iter()
-      .for_each(|v| {
-        let status = v
-          .as_object()
-          .unwrap()
-          .get("status")
-          .unwrap();
-        assert_eq!(status.is_null(), true);
-      });
+    assert_eq!(
+      keys
+        .into_iter()
+        .find(|k| k.status.is_some())
+        .is_none(),
+      true
+    );
 
     // Check TeraGas burnt
     println!(
