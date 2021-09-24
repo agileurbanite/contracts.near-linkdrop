@@ -1,5 +1,5 @@
 use super::utils::{create_campaign, get_context, keys};
-use crate::KeyStatus;
+use crate::*;
 use near_sdk::testing_env;
 
 #[test]
@@ -10,9 +10,14 @@ fn refund_two_keys() {
   testing_env!(context);
 
   let mut contract = create_campaign();
+  // It is planned to add 2 keys
+  contract.keys_stats.total = 2;
   contract.add_keys(keys.clone());
 
-  contract.refund_keys(keys.clone(), "b.testnet".parse().unwrap());
+  contract.refund_keys(
+    keys.clone(),
+    "b.testnet".parse().unwrap()
+  );
 
   assert_eq!(
     Some(KeyStatus::Refunded),
@@ -23,7 +28,7 @@ fn refund_two_keys() {
     contract.keys.get(&keys[1].clone().into())
   );
   assert_eq!(2, contract.keys.len());
-  assert_eq!(2, contract.keys_stats.total);
   assert_eq!(2, contract.keys_stats.refunded);
   assert_eq!(0, contract.keys_stats.active);
+  assert_eq!(CampaignStatus::Completed, contract.status)
 }

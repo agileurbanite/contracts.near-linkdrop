@@ -4,7 +4,7 @@ use near_sdk_sim::{call, to_yocto};
 
 #[test]
 fn create_one_account_and_claim() {
-  let (root, mut near_campaign) = init_near_campaign("5");
+  let (root, mut near_campaign) = init_near_campaign(1, "5");
   init_external_linkdrop(&root);
 
   let key_set = KeySet::create(0, 0);

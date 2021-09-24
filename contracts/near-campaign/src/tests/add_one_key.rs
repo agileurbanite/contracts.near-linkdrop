@@ -15,6 +15,7 @@ fn add_one_key() {
     contract.keys.get(&keys[0].clone().into())
   );
   assert_eq!(1, contract.keys.len());
-  assert_eq!(1, contract.keys_stats.total);
   assert_eq!(1, contract.keys_stats.active);
+  assert_eq!(1, contract.keys_stats.added_during_creation);
+  assert_eq!(CampaignStatus::Active, contract.status);
 }

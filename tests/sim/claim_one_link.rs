@@ -4,7 +4,7 @@ use near_sdk_sim::{call, to_yocto};
 
 #[test]
 fn claim_one_link() {
-  let (root, mut near_campaign) = init_near_campaign("5");
+  let (root, mut near_campaign) = init_near_campaign(1, "5");
   let bob = root.create_user("bob".parse().unwrap(), to_yocto("10"));
   let key_set = KeySet::create(0, 0);
   let (_, pk, sk) = key_set.some_keys(0);
