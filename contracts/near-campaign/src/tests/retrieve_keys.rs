@@ -16,12 +16,11 @@ fn retrieve_keys() {
   testing_env!(context);
   let mut contract = create_campaign();
   contract.add_keys(keys.clone());
-  contract.claim("c.testnet".parse().unwrap());
 
   let stored_keys: Vec<Key> = contract.get_keys(keys.clone());
   assert_eq!(10, stored_keys.len());
 
-  assert_eq!(Some(KeyStatus::Claimed), stored_keys[0].status);
+  assert_eq!(Some(KeyStatus::Active), stored_keys[0].status);
   assert_eq!(keys[0], stored_keys[0].pk);
 
   assert_eq!(Some(KeyStatus::Active), stored_keys[9].status);

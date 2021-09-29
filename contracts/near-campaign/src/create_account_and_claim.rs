@@ -1,5 +1,5 @@
 use crate::*;
-use near_sdk::Gas;
+use std::ops::Mul;
 
 #[near_bindgen]
 impl Campaign {
@@ -14,22 +14,11 @@ impl Campaign {
       CampaignStatus::Active,
       "Unable to call this method on inactive campaign"
     );
-
-    let key = env::signer_account_pk();
-
     assert_eq!(
-      self.keys.get(&key),
+      self.keys.get(&env::signer_account_pk()),
       Some(KeyStatus::Active),
       "Cannot create account by inactive or non-existing key"
     );
-
-    self.keys.insert(&key, &KeyStatus::Created);
-    self.keys_stats.active -= 1;
-    self.keys_stats.created += 1;
-
-    if self.keys_stats.active == 0 {
-      self.status = CampaignStatus::Completed;
-    };
 
     Promise::new(self.account_creator.clone())
       .function_call(
@@ -38,8 +27,12 @@ impl Campaign {
           .to_string()
           .into_bytes(),
         self.tokens_per_key,
-        Gas(50_000_000_000_000), // 50 Tgas
+        BASE_GAS.mul(2), // 50 TGas
       )
-      .then(Promise::new(env::current_account_id()).delete_key(key))
+      .then(ext_self::on_account_created_and_claimed(
+        env::current_account_id(),
+        0,
+        BASE_GAS.mul(2), // 50 TGas
+      ))
   }
 }

@@ -13,7 +13,8 @@ pub fn init_near_campaign(
   total_keys: u64,
   tokens_per_key: &str,
 ) -> (UserAccount, ContractAccount<NearCampaign>) {
-  let genesis = GenesisConfig::default();
+  let mut genesis = GenesisConfig::default();
+  genesis.gas_limit = 900 * 10u64.pow(12);
   let root = init_simulator(Some(genesis));
 
   let near_campaign = deploy!(

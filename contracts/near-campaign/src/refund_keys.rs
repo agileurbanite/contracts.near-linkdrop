@@ -1,4 +1,5 @@
 use crate::*;
+use std::ops::Mul;
 
 #[near_bindgen]
 impl Campaign {
@@ -19,17 +20,14 @@ impl Campaign {
         "Cannot refund inactive or non-existing key"
       );
 
-      self.keys.insert(&key, &KeyStatus::Refunded);
-      self.keys_stats.active -= 1;
-      self.keys_stats.refunded += 1;
-
-      if self.keys_stats.active == 0 {
-        self.status = CampaignStatus::Completed;
-      };
-
-      Promise::new(env::current_account_id())
-        .delete_key(key)
-        .then(Promise::new(beneficiary_id.clone()).transfer(self.tokens_per_key));
+      Promise::new(beneficiary_id.clone())
+        .transfer(self.tokens_per_key)
+        .then(ext_self::on_refunded_key(
+          key,
+          env::current_account_id(),
+          0,
+          BASE_GAS.mul(2), // 50 TGas
+        ));
     });
   }
 }

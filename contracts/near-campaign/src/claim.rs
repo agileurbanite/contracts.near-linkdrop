@@ -1,4 +1,5 @@
 use crate::*;
+use std::ops::Mul;
 
 /*
  'claim' allows us to send some amount of NEAR that is defined by 'tokens_per_key' to any account
@@ -16,25 +17,18 @@ impl Campaign {
       CampaignStatus::Active,
       "Unable to call this method on inactive campaign"
     );
-
-    let key = env::signer_account_pk();
-
     assert_eq!(
-      self.keys.get(&key),
+      self.keys.get(&env::signer_account_pk()),
       Some(KeyStatus::Active),
       "Cannot claim by inactive or non-existing key"
     );
 
-    self.keys.insert(&key, &KeyStatus::Claimed);
-    self.keys_stats.active -= 1;
-    self.keys_stats.claimed += 1;
-
-    if self.keys_stats.active == 0 {
-      self.status = CampaignStatus::Completed;
-    };
-
-    Promise::new(env::current_account_id())
-      .delete_key(key)
-      .then(Promise::new(account_id).transfer(self.tokens_per_key))
+    Promise::new(account_id)
+      .transfer(self.tokens_per_key)
+      .then(ext_self::on_claimed(
+        env::current_account_id(),
+        0,
+        BASE_GAS.mul(2), // 50 TGas
+      ))
   }
 }

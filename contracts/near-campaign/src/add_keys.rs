@@ -1,5 +1,8 @@
 use crate::*;
 
+// Access key allowance
+const ACCESS_KEY_ALLOWANCE: u128 = 200_000_000_000_000_000_000_000; // 0.2 NEAR
+
 #[near_bindgen]
 impl Campaign {
   #[private]
@@ -23,7 +26,7 @@ impl Campaign {
 
       Promise::new(env::current_account_id()).add_access_key(
         key,
-        1_000_000_000_000_000_000_000_000, // 1 NEAR
+        ACCESS_KEY_ALLOWANCE,
         env::current_account_id(),
         "create_account_and_claim,claim".to_string(),
       );

@@ -3,7 +3,17 @@ use near_sdk::collections::UnorderedMap;
 use near_sdk::json_types::U128;
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::serde_json::json;
-use near_sdk::{env, near_bindgen, AccountId, Balance, PanicOnDefault, Promise, PublicKey};
+use near_sdk::{
+  env,
+  ext_contract,
+  near_bindgen,
+  AccountId,
+  Balance,
+  Gas,
+  PanicOnDefault,
+  Promise,
+  PublicKey
+};
 
 mod add_keys;
 mod claim;
@@ -14,10 +24,27 @@ pub mod get_campaign_metadata;
 mod get_key_balance;
 pub mod get_keys;
 mod new;
+mod on_account_created_and_claimed;
+mod on_claimed;
+mod on_refunded_key;
 mod refund_keys;
 
 #[cfg(test)]
 mod tests;
+
+pub const BASE_GAS: Gas = Gas(25_000_000_000_000); // 25 TGas
+
+#[ext_contract(ext_self)]
+pub trait ExtSelfCampaign {
+  // Callback after claiming link
+  fn on_claimed(&mut self) -> bool;
+
+  // Callback after creating account and claiming link
+  fn on_account_created_and_claimed(&mut self) -> bool;
+
+  // Callback after refunded the key
+  fn on_refunded_key(&mut self, public_key: PublicKey) -> bool;
+}
 
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, PartialEq, Debug)]
 #[serde(crate = "near_sdk::serde")]

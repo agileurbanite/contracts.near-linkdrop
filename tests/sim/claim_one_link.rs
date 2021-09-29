@@ -26,11 +26,11 @@ fn claim_one_link() {
 
   near_campaign.user_account.signer = claim_signer.clone();
 
-  call!(
+  let result = call!(
     near_campaign.user_account,
     near_campaign.claim(bob.account_id())
   );
-  assert_eq!(to_yocto("15"), bob.account().unwrap().amount);
+  result.assert_success();
 
   // Used key should not exist after the successful 'claim'
   {
@@ -40,5 +40,12 @@ fn claim_one_link() {
       &claim_signer.public_key(),
     );
     assert_eq!(key.is_none(), true);
+
+    // Check Bob balance
+    assert_eq!(to_yocto("15"), bob.account().unwrap().amount);
+
+    // Check the log for callback output
+    assert_eq!(result.logs().len(), 1);
+    assert!(result.logs()[0].contains("The link is claimed: true"));
   }
 }
