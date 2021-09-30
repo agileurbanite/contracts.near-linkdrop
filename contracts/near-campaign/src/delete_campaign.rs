@@ -1,5 +1,6 @@
+use crate::gas::*;
 use crate::*;
-use near_sdk::{ext_contract, Gas};
+use near_sdk::ext_contract;
 
 #[ext_contract]
 pub trait ExtUser {
@@ -15,7 +16,7 @@ impl Campaign {
       .then(ext_user::on_near_campaign_deleted(
         self.user_id,
         0,
-        Gas(25_000_000_000_000),
+        BASE_GAS, // 25 TGas
       ))
   }
 }

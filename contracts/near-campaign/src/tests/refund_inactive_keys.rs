@@ -1,4 +1,5 @@
 use super::utils::{create_campaign, get_context, keys};
+use crate::*;
 use near_sdk::testing_env;
 
 #[test]
@@ -13,12 +14,12 @@ fn refund_inactive_keys() {
     let mut contract = create_campaign();
     // It is planned to add 2 keys
     contract.keys_stats.total = 2;
-    contract.add_keys(keys);
+    contract.add_keys(keys.clone());
 
-    contract.refund_keys(
-        some_keys.clone(),
-        "b.testnet".parse().unwrap()
-    );
+    // Refunf one link
+    contract.keys.insert(&keys[0].clone().into(), &KeyStatus::Refunded);
+    contract.keys_stats.active -= 1;
+    contract.keys_stats.refunded += 1;
 
     // Retry using the same key
     contract.refund_keys(

@@ -1,5 +1,6 @@
+use crate::gas::*;
 use crate::*;
-use near_sdk::{Gas, PublicKey};
+use near_sdk::PublicKey;
 
 #[near_bindgen]
 impl User {
@@ -32,13 +33,13 @@ impl User {
         .to_string()
         .into_bytes(),
         0,
-        Gas(50_000_000_000_000),
+        t_gas(50), // 50 TGas
       )
       .then(ext_self_user::on_near_campaign_created(
         campaign_id,
         env::current_account_id(),
         0,
-        Gas(25_000_000_000_000),
+        BASE_GAS, // 25 TGas
       ))
   }
 }

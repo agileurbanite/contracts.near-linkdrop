@@ -21,7 +21,7 @@ fn create_one_account_and_claim() {
   near_campaign.user_account.signer = claim_signer.clone();
 
   // Create a new account
-  call!(
+  let result = call!(
     near_campaign.user_account,
     near_campaign.create_account_and_claim("john.testnet".parse().unwrap(), new_pk)
   );
@@ -43,5 +43,9 @@ fn create_one_account_and_claim() {
       &claim_signer.public_key(),
     );
     assert_eq!(key.is_none(), true);
+
+    // Check the log for callback output
+    assert_eq!(result.logs().len(), 1);
+    assert!(result.logs()[0].contains("The account is created and link is claimed: true"));
   }
 }

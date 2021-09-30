@@ -45,7 +45,7 @@ fn refund_inactive_or_non_existing_keys() {
   let result = call!(
     near_campaign.user_account,
     near_campaign.refund_keys(key_set.public_keys(), alice.account_id),
-    gas = DEFAULT_GAS
+    gas = 2 * DEFAULT_GAS
   );
   // No successful outcome is expected
   assert!(!result.is_ok());

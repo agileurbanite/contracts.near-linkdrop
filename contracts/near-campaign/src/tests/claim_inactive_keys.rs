@@ -1,4 +1,5 @@
 use super::utils::{create_campaign, get_context, keys};
+use crate::*;
 use near_sdk::testing_env;
 
 #[test]
@@ -19,7 +20,10 @@ fn claim_inactive_keys() {
     contract.keys_stats.total = 2;
     contract.add_keys(keys.clone());
 
-    contract.claim("c.testnet".parse().unwrap());
+    // Claim one link
+    contract.keys.insert(&keys[0].clone().into(), &KeyStatus::Claimed);
+    contract.keys_stats.active -= 1;
+    contract.keys_stats.claimed += 1;
 
     // Retry using the same key
     contract.claim("d.testnet".parse().unwrap());

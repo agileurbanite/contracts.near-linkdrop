@@ -8,7 +8,7 @@ use near_sdk_sim::{call, view, to_yocto, DEFAULT_GAS};
 #[test]
 fn refund_multiple_keys() {
   let tera_gas = u64::pow(10, 12);
-  let expected_gas_ceiling: u64 = tera_gas * 120; // 120 TeraGas
+  let expected_gas_ceiling: u64 = tera_gas * 140; // 140 TeraGas
 
   let (root, near_campaign) = init_near_campaign(10, "5");
   let key_set = KeySet::create(0, 9);
@@ -31,7 +31,7 @@ fn refund_multiple_keys() {
   let result = call!(
     near_campaign.user_account,
     near_campaign.refund_keys(key_set.public_keys(), alice.account_id),
-    gas = DEFAULT_GAS
+    gas = 3 * DEFAULT_GAS
   );
   result.assert_success();
 
