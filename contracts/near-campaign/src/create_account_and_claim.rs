@@ -1,5 +1,5 @@
+use crate::gas::*;
 use crate::*;
-use std::ops::Mul;
 
 #[near_bindgen]
 impl Campaign {
@@ -27,12 +27,12 @@ impl Campaign {
           .to_string()
           .into_bytes(),
         self.tokens_per_key,
-        BASE_GAS.mul(2), // 50 TGas
+        t_gas(50), // 50 TGas
       )
       .then(ext_self::on_account_created_and_claimed(
         env::current_account_id(),
         0,
-        BASE_GAS.mul(2), // 50 TGas
+        BASE_GAS, // 25 TGas
       ))
   }
 }

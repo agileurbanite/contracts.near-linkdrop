@@ -5,6 +5,7 @@ use near_sdk::serde_json::json;
 use near_sdk::{env, ext_contract, near_bindgen, AccountId, PanicOnDefault, Promise};
 
 mod create_near_campaign;
+mod gas;
 mod get_campaigns;
 mod get_user_metadata;
 mod new;

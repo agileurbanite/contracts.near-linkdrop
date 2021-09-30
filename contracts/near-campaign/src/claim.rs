@@ -1,5 +1,5 @@
+use crate::gas::*;
 use crate::*;
-use std::ops::Mul;
 
 /*
  'claim' allows us to send some amount of NEAR that is defined by 'tokens_per_key' to any account
@@ -28,7 +28,7 @@ impl Campaign {
       .then(ext_self::on_claimed(
         env::current_account_id(),
         0,
-        BASE_GAS.mul(2), // 50 TGas
+        BASE_GAS, // 25 TGas
       ))
   }
 }

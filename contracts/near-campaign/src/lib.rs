@@ -9,7 +9,6 @@ use near_sdk::{
   near_bindgen,
   AccountId,
   Balance,
-  Gas,
   PanicOnDefault,
   Promise,
   PublicKey
@@ -20,6 +19,7 @@ mod claim;
 pub mod clear_state;
 mod create_account_and_claim;
 mod delete_campaign;
+mod gas;
 pub mod get_campaign_metadata;
 mod get_key_balance;
 pub mod get_keys;
@@ -31,8 +31,6 @@ mod refund_keys;
 
 #[cfg(test)]
 mod tests;
-
-pub const BASE_GAS: Gas = Gas(25_000_000_000_000); // 25 TGas
 
 #[ext_contract(ext_self)]
 pub trait ExtSelfCampaign {

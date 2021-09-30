@@ -1,5 +1,5 @@
+use crate::gas::*;
 use crate::*;
-use std::ops::Mul;
 
 #[near_bindgen]
 impl Campaign {
@@ -26,7 +26,7 @@ impl Campaign {
           key,
           env::current_account_id(),
           0,
-          BASE_GAS.mul(2), // 50 TGas
+          BASE_GAS, // 25 TGas
         ));
     });
   }

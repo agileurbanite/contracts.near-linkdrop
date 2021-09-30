@@ -1,7 +1,7 @@
 use crate::*;
 
 // Access key allowance
-const ACCESS_KEY_ALLOWANCE: u128 = 200_000_000_000_000_000_000_000; // 0.2 NEAR
+const ACCESS_KEY_ALLOWANCE: u128 = 90_000_000_000_000_000_000_000; // 0.09 NEAR
 
 #[near_bindgen]
 impl Campaign {
