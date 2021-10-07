@@ -32,7 +32,7 @@ contain some amount of NEAR, which is the same for all links of the campaign. Th
 this link - create a new account or get NEAR on his existing account.
 For both of these actions we use the 'root account' - `testnet` in the testnet network and `near` in the mainnet.
 
-##How to use via NEAR CLI
+## How to use via NEAR CLI
 1. First of all, we need to deploy Linkdrop contract to testnet:\
 `near dev-deploy wasm/linkdrop.wasm`\
 It will create a dev account like `dev-1633605027594-34986547928831` and initialize it.
@@ -132,7 +132,8 @@ We can interact with it is the next ways:
 `near call $NEAR_CAMPAIGN_ID refund_keys '{
 "keys":["8bFrYwXUEvLH5zkzGn2fG2bKjJu3kNNP4xXqsBvc2nJe"],
 "beneficiary_id": "alice.dev-1633603526196-33735380823540"
-}' --accountId $NEAR_CAMPAIGN_ID --gas 300000000000000`
+}' --accountId $NEAR_CAMPAIGN_ID --gas 300000000000000`\
+####
 12. When campaign will be finished we can delete it and get the remains of NEAR back.
 First, lets clear state - we can't delete the account with a large state (for example, 
 if we will put 1000 keys): \
