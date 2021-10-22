@@ -25,25 +25,14 @@ fn create_near_campaign_incorrect_name() {
       ),
     deposit = transfer_amount
   );
-  result.assert_success();
+  // No successful outcome is expected
+  assert!(!result.is_ok());
 
   {
     let runtime = root.borrow_runtime();
 
     // One error should occur during the promise execute
-    assert_one_promise_error(
-      result.clone(),
-      format!(
-        "A sub-account ID \"{}.{}\" can't be created by account \"{}\"",
-        campaign_name,
-        user_contract.account_id(),
-        user_contract.account_id()
-      ).as_str()
-    );
-
-    // Check the log for callback output
-    assert_eq!(result.logs().len(), 1);
-    assert!(result.logs()[0].contains("Is campaign created: false"));
+    assert_one_promise_error(result.clone(), "assertion failed");
 
     // The user's balance should not change
     let user_balance = runtime

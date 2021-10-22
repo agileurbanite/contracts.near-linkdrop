@@ -1,7 +1,7 @@
-use crate::utils::{assert_almost_eq_with_max_delta, init_near_campaign, KeySet};
+use crate::utils::{assert_eq_with_gas, init_near_campaign, KeySet};
 use near_campaign::get_campaign_metadata::Metadata;
 use near_sdk_sim::transaction::ExecutionStatus;
-use near_sdk_sim::{call, view, to_yocto, DEFAULT_GAS};
+use near_sdk_sim::{call, view, DEFAULT_GAS};
 
 #[test]
 fn refund_non_existing_account() {
@@ -45,11 +45,7 @@ fn refund_non_existing_account() {
       .view_account(near_campaign.account_id().as_str())
       .unwrap()
       .amount;
-    assert_almost_eq_with_max_delta(
-      campaign_balance_start,
-      campaign_balance_end,
-      to_yocto("0.02")
-    );
+    assert_eq_with_gas(campaign_balance_start, campaign_balance_end);
 
     // Check first Campaign access key
     let mut key = runtime.view_access_key(near_campaign.account_id().as_str(), &pk_first);

@@ -1,6 +1,4 @@
-use crate::utils::{
-  assert_almost_eq_with_max_delta, assert_eq_with_gas, init_near_campaign, KeySet,
-};
+use crate::utils::{assert_eq_with_gas, init_near_campaign, KeySet};
 use near_campaign::get_campaign_metadata::Metadata;
 use near_sdk::AccountId;
 use near_sdk_sim::{call, view, to_yocto, DEFAULT_GAS};
@@ -50,10 +48,9 @@ fn refund_multiple_keys() {
       .view_account(near_campaign.account_id().as_str())
       .unwrap()
       .amount;
-    assert_almost_eq_with_max_delta(
+    assert_eq_with_gas(
       to_yocto("150"), // 200 - 10 * 5 NEAR
-      campaign_balance,
-      to_yocto("0.02"),
+      campaign_balance
     );
 
     // Check first Campaign access key

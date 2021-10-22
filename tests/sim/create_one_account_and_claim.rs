@@ -1,5 +1,6 @@
 use crate::utils::{init_external_linkdrop, init_near_campaign, KeySet};
 use near_crypto::{InMemorySigner, Signer};
+use near_sdk::serde_json::json;
 use near_sdk_sim::{call, to_yocto};
 
 #[test]
@@ -21,9 +22,17 @@ fn create_one_account_and_claim() {
   near_campaign.user_account.signer = claim_signer.clone();
 
   // Create a new account
-  let result = call!(
-    near_campaign.user_account,
-    near_campaign.create_account_and_claim("john.testnet".parse().unwrap(), new_pk)
+  let result = near_campaign.user_account.call(
+    near_campaign.account_id().clone(),
+    "create_account_and_claim",
+    &json!({
+      "new_account_id": "john.testnet".to_string(),
+      "new_public_key": new_pk
+    })
+      .to_string()
+      .into_bytes(),
+    100000000000000, // 100 TGas
+    0
   );
 
   {

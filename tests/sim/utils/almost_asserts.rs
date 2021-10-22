@@ -12,5 +12,5 @@ pub fn assert_almost_eq_with_max_delta(left: u128, right: u128, max_delta: u128)
 }
 
 pub fn assert_eq_with_gas(left: u128, right: u128) {
-  assert_almost_eq_with_max_delta(left, right, to_yocto("0.006"));
+  assert_almost_eq_with_max_delta(left, right, to_yocto("0.03")); // 300 Tgas
 }

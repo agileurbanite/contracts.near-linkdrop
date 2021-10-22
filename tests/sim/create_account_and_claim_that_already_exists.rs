@@ -6,6 +6,7 @@ use crate::utils::{
   KeySet
 };
 use near_crypto::{InMemorySigner, Signer};
+use near_sdk::serde_json::json;
 use near_sdk_sim::call;
 
 #[test]
@@ -28,9 +29,17 @@ fn create_account_and_claim_that_already_exists() {
   near_campaign.user_account.signer = claim_signer.clone();
 
   // Create a new account for John
-  call!(
-    near_campaign.user_account,
-    near_campaign.create_account_and_claim("john.testnet".parse().unwrap(), new_pk.clone())
+  near_campaign.user_account.call(
+    near_campaign.account_id().clone(),
+    "create_account_and_claim",
+    &json!({
+      "new_account_id": "john.testnet".to_string(),
+      "new_public_key": new_pk
+    })
+      .to_string()
+      .into_bytes(),
+    100000000000000, // 100 TGas
+    0
   );
   let campaign_balance_start = near_campaign.account().unwrap().amount;
 
@@ -39,9 +48,17 @@ fn create_account_and_claim_that_already_exists() {
   near_campaign.user_account.signer = claim_signer.clone();
 
   // Let's try to repeat for an existing account
-  let result = call!(
-    near_campaign.user_account,
-    near_campaign.create_account_and_claim("john.testnet".parse().unwrap(), new_pk)
+  let result = near_campaign.user_account.call(
+    near_campaign.account_id().clone(),
+    "create_account_and_claim",
+    &json!({
+      "new_account_id": "john.testnet".to_string(),
+      "new_public_key": new_pk
+    })
+      .to_string()
+      .into_bytes(),
+    100000000000000, // 100 TGas
+    0
   );
   result.assert_success();
 

@@ -5,6 +5,7 @@ use crate::utils::{
   KeySet
 };
 use near_crypto::{InMemorySigner, Signer};
+use near_sdk::serde_json::json;
 use near_sdk_sim::call;
 
 #[test]
@@ -23,9 +24,16 @@ fn claim_non_existing_account() {
   near_campaign.user_account.signer = claim_signer.clone();
 
   let campaign_balance_start = near_campaign.account().unwrap().amount;
-  let result = call!(
-    near_campaign.user_account,
-    near_campaign.claim("bob".parse().unwrap())
+  let result = near_campaign.user_account.call(
+    near_campaign.account_id().clone(),
+    "claim",
+    &json!({
+      "account_id": "bob".to_string()
+    })
+      .to_string()
+      .into_bytes(),
+    100000000000000, // 100 TGas
+    0
   );
   result.assert_success();
 
