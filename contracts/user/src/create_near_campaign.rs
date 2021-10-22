@@ -1,6 +1,7 @@
 use crate::gas::*;
 use crate::*;
 use near_sdk::PublicKey;
+use std::convert::TryFrom;
 
 #[near_bindgen]
 impl User {
@@ -8,13 +9,16 @@ impl User {
   #[private]
   pub fn create_near_campaign(
     &mut self,
-    name: String, // TODO Need to validate the name. NO '.', e.g 'my.campaign' has to be invalid
+    name: String,
     public_key: PublicKey,
     total_keys: u64,
     tokens_per_key: U128,
     account_creator: AccountId,
   ) -> Promise {
-    let campaign_id = AccountId::new_unchecked(format!("{}.{}", name, env::current_account_id()));
+    assert!(!name.contains('.'));
+
+    let campaign_id = AccountId::try_from(format!("{}.{}", name, env::current_account_id()))
+      .expect("Name is expected to be a valid subaccount prefix");
 
     Promise::new(campaign_id.clone())
       .create_account()
