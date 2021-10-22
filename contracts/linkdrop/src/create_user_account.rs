@@ -1,3 +1,5 @@
+use std::convert::TryFrom;
+
 use crate::*;
 use near_sdk::{AccountId, Gas, PublicKey};
 
@@ -7,7 +9,9 @@ const BASE_GAS: Gas = Gas(25_000_000_000_000); // 25 TGas
 impl Linkdrop {
   #[payable]
   pub fn create_user_account(name: String, public_key: PublicKey) -> Promise {
-    let account_id = AccountId::new_unchecked(format!("{}.{}", name, env::current_account_id()));
+    assert!(!name.contains('.'));
+    let account_id = AccountId::try_from(format!("{}.{}", name, env::current_account_id()))
+      .expect("name is expected to be a valid subaccount prefix");
 
     Promise::new(account_id.clone())
       .create_account()
