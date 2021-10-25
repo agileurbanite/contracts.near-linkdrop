@@ -1,5 +1,6 @@
 use crate::utils::{init_near_campaign, KeySet};
 use near_crypto::{InMemorySigner, Signer};
+use near_sdk::serde_json::json;
 use near_sdk_sim::{call, to_yocto};
 
 #[test]
@@ -26,9 +27,16 @@ fn claim_one_link() {
 
   near_campaign.user_account.signer = claim_signer.clone();
 
-  let result = call!(
-    near_campaign.user_account,
-    near_campaign.claim(bob.account_id())
+  let result = near_campaign.user_account.call(
+    near_campaign.account_id().clone(),
+    "claim",
+    &json!({
+      "account_id": bob.account_id().to_string()
+    })
+      .to_string()
+      .into_bytes(),
+    100000000000000, // 100 TGas
+    0
   );
   result.assert_success();
 

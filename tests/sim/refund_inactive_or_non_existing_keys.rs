@@ -1,5 +1,4 @@
 use crate::utils::{
-  assert_almost_eq_with_max_delta,
   assert_eq_with_gas,
   assert_one_promise_error,
   init_near_campaign,
@@ -8,6 +7,7 @@ use crate::utils::{
 use near_campaign::get_campaign_metadata::Metadata;
 use near_crypto::{InMemorySigner};
 use near_sdk::AccountId;
+use near_sdk::serde_json::json;
 use near_sdk_sim::{call, view, to_yocto, DEFAULT_GAS};
 
 #[test]
@@ -33,9 +33,16 @@ fn refund_inactive_or_non_existing_keys() {
   let claim_signer = InMemorySigner::from_secret_key(near_campaign.account_id().into(), sk);
   let old_signer = near_campaign.user_account.signer;
   near_campaign.user_account.signer = claim_signer.clone();
-  call!(
-    near_campaign.user_account,
-    near_campaign.claim(alice.account_id())
+  near_campaign.user_account.call(
+    near_campaign.account_id().clone(),
+    "claim",
+    &json!({
+      "account_id": alice.account_id().to_string()
+    })
+      .to_string()
+      .into_bytes(),
+    100000000000000, // 100 TGas
+    0
   );
   assert_eq!(to_yocto("15"), alice.account().unwrap().amount);
   assert_eq_with_gas(to_yocto("195"), near_campaign.account().unwrap().amount);
@@ -64,11 +71,7 @@ fn refund_inactive_or_non_existing_keys() {
     assert_eq!(to_yocto("15"), alice_balance);
 
     let campaign_balance = runtime.view_account("near_campaign").unwrap().amount;
-    assert_almost_eq_with_max_delta(
-      to_yocto("195"),
-      campaign_balance,
-      to_yocto("0.01")
-    );
+    assert_eq_with_gas(to_yocto("195"), campaign_balance);
 
     // Key statuses must not change
     let metadata: Metadata = view!(near_campaign.get_campaign_metadata()).unwrap_json();
