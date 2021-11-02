@@ -5,12 +5,18 @@ authors = ["eclipseeer <eclipseeer@gmail.com>"]
 edition = "2018"
 
 [workspace]
-members = ['contracts/linkdrop', 'contracts/user', 'contracts/near-campaign']
+members = [
+  'contracts/linkdrop',
+  'contracts/user',
+  'contracts/near-campaign',
+  'contracts/nft-campaign'
+]
 
 [dev-dependencies]
-near-sdk = "4.0.0-pre.2"
-near-sdk-sim = "4.0.0-pre.2"
+near-sdk = "4.0.0-pre.4"
+near-sdk-sim = "4.0.0-pre.4"
 near-crypto = "0.1.0"
 linkdrop = { path = "contracts/linkdrop" }
 user = { path = "contracts/user" }
 near-campaign = { path = "contracts/near-campaign" }
+nft-campaign = { path = "contracts/nft-campaign"}

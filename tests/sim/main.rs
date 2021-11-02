@@ -24,3 +24,4 @@ mod refund_non_existing_account;
 mod dev_test;
 
 mod utils;
+mod nft_campaign;

@@ -1,5 +1,6 @@
 mod almost_asserts;
 mod assert_one_promise_error;
+pub mod deploy_contracts;
 mod deploy_user_contract;
 mod get_contract_account;
 mod init_external_linkdrop;
@@ -9,6 +10,7 @@ mod init_simulation;
 mod init_user_and_near_campaign;
 mod init_user_contract;
 mod keys;
+pub mod nft_holder;
 
 pub use almost_asserts::*;
 pub use assert_one_promise_error::assert_one_promise_error;
