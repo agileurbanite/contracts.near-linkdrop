@@ -10,7 +10,8 @@ mod init_simulation;
 mod init_user_and_near_campaign;
 mod init_user_contract;
 mod keys;
-pub mod nft_holder;
+pub mod nft_factory;
+pub mod person;
 
 pub use almost_asserts::*;
 pub use assert_one_promise_error::assert_one_promise_error;
