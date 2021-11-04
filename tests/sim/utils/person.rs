@@ -1,5 +1,5 @@
 use near_sdk::AccountId;
-use near_sdk_sim::{lazy_static_include, to_yocto, ExecutionResult, UserAccount, DEFAULT_GAS};
+use near_sdk_sim::{to_yocto, UserAccount};
 use std::rc::Rc;
 
 pub struct Person {

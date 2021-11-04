@@ -3,24 +3,32 @@ use near_sdk::collections::LookupMap;
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{env, near_bindgen, AccountId, PanicOnDefault, Promise, PublicKey};
 
-// mod add_drops;
 mod claim;
+mod get_drops;
 mod new;
 mod nft_on_transfer;
+mod utils;
 
 pub type TokenId = String;
 
-#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Debug)]
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Clone, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub struct NFT {
   pub token_id: TokenId,
   pub contract_id: AccountId,
 }
 
+#[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, PartialEq, Debug)]
+#[serde(crate = "near_sdk::serde")]
+pub enum DropStatus {
+  ACTIVE,
+  CLAIMED,
+}
+
 #[derive(BorshSerialize, BorshDeserialize, Serialize, Deserialize, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub struct Drop {
-  pub status: String,
+  pub status: DropStatus,
   pub nft: NFT,
 }
 

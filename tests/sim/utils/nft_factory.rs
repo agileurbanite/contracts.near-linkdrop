@@ -1,5 +1,5 @@
 use near_sdk::serde_json::{json, Value};
-use near_sdk_sim::{to_yocto, UserAccount};
+use near_sdk_sim::{lazy_static_include, to_yocto, ExecutionResult, UserAccount, DEFAULT_GAS};
 use std::rc::Rc;
 
 lazy_static_include::lazy_static_include_bytes! {
@@ -62,7 +62,29 @@ impl NftFactory {
   }
 
   pub fn default_nft_mint(&self, signer: &UserAccount) -> ExecutionResult {
-    self.nft_mint(signer, "1", signer.account_id.as_str(), "My first NFT")
+    self.nft_mint(signer, "1", signer.account_id.as_str(), "NFT-1")
+  }
+
+  pub fn nft_transfer_call(
+    &self,
+    signer: &UserAccount,
+    receiver_id: &str,
+    token_id: &str,
+    public_key: &str,
+  ) -> ExecutionResult {
+    signer.call(
+      self.account.account_id.clone(),
+      "nft_transfer_call",
+      json!({
+        "receiver_id": receiver_id,
+        "token_id": token_id,
+        "msg": public_key,
+      })
+      .to_string()
+      .as_bytes(),
+      DEFAULT_GAS,
+      1,
+    )
   }
 
   pub fn get_nft_metadata(&self) -> Value {
