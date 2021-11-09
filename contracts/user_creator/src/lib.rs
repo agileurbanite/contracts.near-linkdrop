@@ -7,8 +7,8 @@ mod on_user_created;
 
 const USER_WASM: &[u8] = include_bytes!("../../../wasm/user.wasm");
 
-#[ext_contract(ext_self)]
-pub trait ExtSelfLinkdrop {
+#[ext_contract]
+pub trait ExtSelf {
   fn on_user_created(
     &mut self,
     attached_deposit: U128,
@@ -18,4 +18,4 @@ pub trait ExtSelfLinkdrop {
 
 #[near_bindgen]
 #[derive(Default, BorshDeserialize, BorshSerialize)]
-pub struct Linkdrop {}
+pub struct UserCreator {}

@@ -5,7 +5,7 @@ use std::convert::TryFrom;
 const BASE_GAS: Gas = Gas(25_000_000_000_000); // 25 TGas
 
 #[near_bindgen]
-impl Linkdrop {
+impl UserCreator {
   #[payable]
   pub fn create_user_account(name: String, public_key: PublicKey) -> Promise {
     assert!(!name.contains('.'));

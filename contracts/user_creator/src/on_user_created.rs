@@ -2,7 +2,7 @@ use crate::*;
 use near_sdk::is_promise_success;
 
 #[near_bindgen]
-impl Linkdrop {
+impl UserCreator {
   #[private]
   pub fn on_user_created(
     &mut self,

@@ -1,22 +1,22 @@
 [package]
-name = "linkdrop-wrapper"
-version = "0.1.0"
+name = "near-linkdrop"
+version = "2.0.0"
 authors = ["eclipseeer <eclipseeer@gmail.com>"]
 edition = "2018"
 
 [workspace]
 members = [
-  'contracts/linkdrop',
+  'contracts/user_creator',
   'contracts/user',
-  'contracts/near-campaign',
-  'contracts/nft-campaign'
+  'contracts/campaigns/near_campaign',
+  'contracts/campaigns/nft_campaign'
 ]
 
 [dev-dependencies]
 near-sdk = "4.0.0-pre.4"
 near-sdk-sim = "4.0.0-pre.4"
 near-crypto = "0.1.0"
-linkdrop = { path = "contracts/linkdrop" }
+user_creator = { path = "contracts/user_creator" }
 user = { path = "contracts/user" }
-near-campaign = { path = "contracts/near-campaign" }
-nft-campaign = { path = "contracts/nft-campaign"}
+near_campaign = { path = "contracts/campaigns/near_campaign" }
+nft_campaign = { path = "contracts/campaigns/nft_campaign" }
