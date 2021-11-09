@@ -1,4 +1,4 @@
-# Near Linkdrop
+# Near Linkdrop V1
 Linkdrop is an application that allows you to send NEAR to other people via a link or
 helps a new user to create the account - you can pay a gas fee instead of a user
 and send NEAR to this account.

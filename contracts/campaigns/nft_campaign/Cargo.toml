@@ -1,6 +1,6 @@
 [package]
-name = "nft-campaign"
-version = "0.1.0"
+name = "nft_campaign"
+version = "2.0.0"
 authors = ["eclipseeer <eclipseeer@gmail.com>"]
 edition = "2018"
 
