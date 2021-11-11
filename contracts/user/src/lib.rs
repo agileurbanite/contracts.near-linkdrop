@@ -1,16 +1,19 @@
-use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::collections::UnorderedSet;
-use near_sdk::json_types::U128;
-use near_sdk::serde_json::json;
-use near_sdk::{env, ext_contract, near_bindgen, AccountId, PanicOnDefault, Promise};
-
 mod create_near_campaign;
 mod gas;
 mod get_campaigns;
 mod get_user_metadata;
 mod new;
+mod on_campaign_created;
 mod on_near_campaign_created;
 mod on_near_campaign_deleted;
+
+use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
+use near_sdk::collections::UnorderedSet;
+use near_sdk::json_types::U128;
+use near_sdk::serde_json::json;
+use near_sdk::{
+  env, ext_contract, is_promise_success, near_bindgen, AccountId, PanicOnDefault, Promise,
+};
 
 const NEAR_CAMPAIGN_WASM: &[u8] = include_bytes!("../../../wasm/near_campaign.wasm");
 
