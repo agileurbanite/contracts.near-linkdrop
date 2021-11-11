@@ -6,6 +6,7 @@ edition = "2018"
 
 [dependencies]
 near-sdk = "4.0.0-pre.4"
+common = { path = "../../common" }
 
 [lib]
 crate-type = ["cdylib", "rlib"]

@@ -14,12 +14,7 @@ impl NftCampaignCreator {
       .transfer(env::attached_deposit())
       .add_full_access_key(public_key)
       .deploy_contract(NFT_CAMPAIGN.to_vec())
-      .function_call(
-        "new".to_string(),
-        b"{}".to_vec(),
-        0,
-        Gas::from(25_000_000_000_000),
-      )
+      .function_call("new".to_string(), b"{}".to_vec(), 0, tgas(25))
       .then(
         Promise::new(env::current_account_id()).function_call(
           "on_create_nft_campaign".to_string(),
@@ -30,7 +25,7 @@ impl NftCampaignCreator {
           .to_string()
           .into_bytes(),
           0,
-          Gas(25_000_000_000_000),
+          tgas(25),
         ),
       )
   }
@@ -61,7 +56,7 @@ impl NftCampaignCreator {
       .to_string()
       .into_bytes(),
       0,
-      Gas::from(25_000_000_000_000),
+      tgas(25),
     )
   }
 }
