@@ -6,10 +6,12 @@ edition = "2018"
 
 [workspace]
 members = [
+  'contracts/common',
   'contracts/user_creator',
   'contracts/user',
   'contracts/campaigns/near_campaign',
-  'contracts/campaigns/nft_campaign'
+  'contracts/campaigns/nft_campaign',
+  'contracts/campaign_creators/nft_campaign_creator',
 ]
 
 [dev-dependencies]
@@ -20,3 +22,4 @@ user_creator = { path = "contracts/user_creator" }
 user = { path = "contracts/user" }
 near_campaign = { path = "contracts/campaigns/near_campaign" }
 nft_campaign = { path = "contracts/campaigns/nft_campaign" }
+nft_campaign_creator = { path = "contracts/campaign_creators/nft_campaign_creator" }

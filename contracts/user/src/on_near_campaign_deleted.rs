@@ -1,5 +1,4 @@
 use crate::*;
-use near_sdk::is_promise_success;
 
 #[near_bindgen]
 impl User {
