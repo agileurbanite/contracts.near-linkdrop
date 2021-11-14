@@ -1,0 +1,2 @@
+mod create_near_campaign;
+mod create_near_campaign_incorrect_name;

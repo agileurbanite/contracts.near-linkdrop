@@ -1,10 +1,6 @@
-use crate::utils::deploy_contracts::deploy_nft_campaign;
-use crate::utils::nft_factory::NftFactory;
-use crate::utils::person::Person;
-use crate::utils::{init_simulation, KeySet};
+use crate::utils::{deploy_nft_campaign, init_simulation, KeySet, NftFactory, Person};
 use near_crypto::InMemorySigner;
-use near_sdk_sim::account::{AccessKey, AccessKeyPermission, FunctionCallPermission};
-use near_sdk_sim::{call,view, to_yocto, DEFAULT_GAS};
+use near_sdk_sim::{call, view, DEFAULT_GAS};
 use std::rc::Rc;
 
 #[test]
@@ -13,15 +9,15 @@ fn test() {
   let root = Rc::new(root);
 
   let key_set = KeySet::create(0, 2);
-  let (key, pk, sk) = key_set.some_keys(0);
-  let (key2, pk2, sk2) = key_set.some_keys(1);
+  let (key, sk) = key_set.some_keys(0);
+  let (key2, _sk2) = key_set.some_keys(1);
 
   let alice = Person::create_alice(root.clone());
   let nft_factory = NftFactory::default_init(root.clone(), "alice");
   let mut nft_campaign = deploy_nft_campaign(&root, "nft_campaign");
 
   nft_factory.default_nft_mint(&alice.account);
-  nft_factory.nft_transfer_call(&alice.account, "nft_campaign", "1", pk.to_string().as_str());
+  nft_factory.nft_transfer_call(&alice.account, "nft_campaign", "1", key.as_pk2().to_string().as_str());
 
   // dbg!(nft_factory.get_nft_token("1"));
 
@@ -38,7 +34,7 @@ fn test() {
   dbg!(&result2);
   // dbg!(&result2.promise_results());
 
-  let view1 = view!(nft_campaign.get_drops(vec![key.clone(), key2]));
+  let view1 = view!(nft_campaign.get_drops(vec![key.as_pk1(), key2.as_pk1()]));
   dbg!(view1.unwrap_json_value());
 
   // Check key
