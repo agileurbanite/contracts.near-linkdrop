@@ -15,6 +15,7 @@ pub use person::Person;
 
 pub mod almost_asserts;
 pub mod assert_one_promise_error;
+pub mod deploy_contracts;
 pub mod deploy_user_contract;
 pub mod get_account_access_key;
 pub mod get_account_balance;

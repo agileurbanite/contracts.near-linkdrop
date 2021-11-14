@@ -13,8 +13,8 @@ fn test() {
   let root = Rc::new(root);
 
   let key_set = KeySet::create(0, 2);
-  let (key, pk, sk) = key_set.some_keys(0);
-  let (key2, pk2, sk2) = key_set.some_keys(1);
+  let (pk, sk) = key_set.some_keys(0);
+  let (pk2, sk2) = key_set.some_keys(1);
 
   let alice = Person::create_alice(root.clone());
   let nft_factory = NftFactory::default_init(root.clone(), "alice");
