@@ -1,8 +1,4 @@
-use crate::utils::{
-  assert_one_promise_error,
-  get_account_access_key,
-  NearCampaignUtility
-};
+use crate::utils::{CommonUtils, NearCampaignUtility};
 use near_campaign::get_campaign_metadata::Metadata;
 use near_sdk_sim::{call, to_yocto, view, DEFAULT_GAS};
 
@@ -37,19 +33,19 @@ fn add_existing_keys() {
   assert!(!result.is_ok());
 
   // One error must occur on the second attempt
-  assert_one_promise_error(result.clone(), "Key is already exists");
+  CommonUtils::assert_one_promise_error(result.clone(), "Key is already exists");
 
   // The first attempt added one key
-  let mut key = get_account_access_key(contract.account_id().as_str(), pk_some.as_pk2(), &runtime);
+  let mut key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk_some.as_pk2(), &runtime);
   assert_eq!(key.is_some(), true);
 
   // The second attempt should not add any keys
   let (pk_first, _) = keys.some_keys(0);
-  key = get_account_access_key(contract.account_id().as_str(), pk_first.as_pk2(), &runtime);
+  key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk_first.as_pk2(), &runtime);
   assert_eq!(key.is_none(), true);
 
   let (pk_last, _) = keys.some_keys(9);
-  key = get_account_access_key(contract.account_id().as_str(), pk_last.as_pk2(), &runtime);
+  key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk_last.as_pk2(), &runtime);
   assert_eq!(key.is_none(), true);
 
   // Check the state of the contract

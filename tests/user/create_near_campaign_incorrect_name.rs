@@ -1,13 +1,6 @@
-use crate::utils::{
-  assert_eq_with_gas,
-  assert_one_promise_error,
-  get_account_balance,
-  init_simulation,
-  UserUtility
-};
+use crate::utils::{CommonUtils, UserUtility};
 use near_sdk::json_types::U128;
 use near_sdk_sim::{call, to_yocto};
-use std::rc::Rc;
 
 #[test]
 fn create_near_campaign_incorrect_name() {
@@ -15,8 +8,8 @@ fn create_near_campaign_incorrect_name() {
   let transfer_amount = to_yocto("50");
   let tokens_per_key = to_yocto("7");
 
-  let (root, runtime) = init_simulation();
-  let user_utility = UserUtility::init(Rc::new(root), initial_balance);
+  let (root, runtime) = CommonUtils::init_simulation();
+  let user_utility = UserUtility::init(root, initial_balance);
   let contract = user_utility.contract;
   let pk = user_utility.public_key;
 
@@ -37,9 +30,9 @@ fn create_near_campaign_incorrect_name() {
   assert!(!result.is_ok());
 
   // One error should occur during the promise execute
-  assert_one_promise_error(result.clone(), "assertion failed");
+  CommonUtils::assert_one_promise_error(result.clone(), "assertion failed");
 
   // The user's balance should not change
-  let user_balance = get_account_balance(contract.account_id().as_str(), &runtime);
-  assert_eq_with_gas(user_balance, initial_balance);
+  let user_balance = CommonUtils::retrieve_account_balance(contract.account_id().as_str(), &runtime);
+  CommonUtils::assert_eq_with_gas(user_balance, initial_balance);
 }

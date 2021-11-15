@@ -1,4 +1,4 @@
-use crate::utils::{get_account_access_key, NearCampaignUtility};
+use crate::utils::{CommonUtils, NearCampaignUtility};
 use near_sdk_sim::account::AccessKeyPermission;
 use near_sdk_sim::{call, to_yocto};
 
@@ -21,7 +21,7 @@ fn add_one_key() {
   );
 
   let (pk, _) = keys.some_keys(0);
-  let key = get_account_access_key(contract.account_id().as_str(), pk.as_pk2(), &runtime);
+  let key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk.as_pk2(), &runtime);
   assert_eq!(key.is_some(), true);
 
   // Was the key added as a functional call assess key ?

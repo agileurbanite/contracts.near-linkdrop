@@ -1,20 +1,13 @@
-use crate::utils::{
-  assert_eq_with_gas,
-  get_account_access_key,
-  get_account_balance,
-  init_simulation,
-  UserCreatorUtility
-};
+use crate::utils::{CommonUtils, UserCreatorUtility};
 use near_sdk_sim::{call, to_yocto};
-use std::rc::Rc;
 
 #[test]
 fn create_user() {
   let alice_initial_balance = to_yocto("200");
   let transfer_amount = to_yocto("100");
 
-  let (root, runtime) = init_simulation();
-  let user_creator = UserCreatorUtility::init(Rc::new(root), alice_initial_balance);
+  let (root, runtime) = CommonUtils::init_simulation();
+  let user_creator = UserCreatorUtility::init(root, alice_initial_balance);
   let contract = user_creator.contract;
   let alice = user_creator.user;
   let pk = user_creator.public_key;
@@ -27,18 +20,18 @@ fn create_user() {
   result.assert_success();
 
   // Check Alice balance
-  let alice_balance = get_account_balance(alice.account_id.as_str(), &runtime);
-  assert_eq_with_gas(
+  let alice_balance = CommonUtils::retrieve_account_balance(alice.account_id.as_str(), &runtime);
+  CommonUtils::assert_eq_with_gas(
     to_yocto("100"), // 200 - 100 NEAR
     alice_balance
   );
 
   // Check Alice Linkdrop balance
   let new_account_id = "alice.linkdrop";
-  let alice_linkdrop_balance = get_account_balance(new_account_id, &runtime);
-  assert_eq_with_gas(transfer_amount, alice_linkdrop_balance);
+  let alice_linkdrop_balance = CommonUtils::retrieve_account_balance(new_account_id, &runtime);
+  CommonUtils::assert_eq_with_gas(transfer_amount, alice_linkdrop_balance);
 
   // Check Alice access key
-  let key = get_account_access_key(new_account_id, pk.as_pk2(), &runtime);
+  let key = CommonUtils::retrieve_account_access_key(new_account_id, pk.as_pk2(), &runtime);
   assert_eq!(key.is_some(), true);
 }

@@ -1,9 +1,4 @@
-use crate::utils::{
-  assert_eq_with_gas,
-  get_account_balance,
-  get_account_access_key,
-  NearCampaignUtility
-};
+use crate::utils::{CommonUtils, NearCampaignUtility};
 use near_campaign::get_campaign_metadata::Metadata;
 use near_sdk_sim::transaction::ExecutionStatus;
 use near_sdk_sim::{call, to_yocto, view, DEFAULT_GAS};
@@ -45,17 +40,17 @@ fn refund_non_existing_account() {
   });
 
   // The balance of the contract has not changed
-  let campaign_balance_end = get_account_balance(contract.account_id().as_str(), &runtime);
-  assert_eq_with_gas(campaign_balance_start, campaign_balance_end);
+  let campaign_balance_end = CommonUtils::retrieve_account_balance(contract.account_id().as_str(), &runtime);
+  CommonUtils::assert_eq_with_gas(campaign_balance_start, campaign_balance_end);
 
   // Check first Campaign access key
   let (pk_first, _) = keys.some_keys(0);
-  let mut key = get_account_access_key(contract.account_id().as_str(), pk_first.as_pk2(), &runtime);
+  let mut key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk_first.as_pk2(), &runtime);
   assert_eq!(key.is_some(), true);
 
   // Check last Campaign access key
   let (pk_last, _) = keys.some_keys(9);
-  key = get_account_access_key(contract.account_id().as_str(), pk_last.as_pk2(), &runtime);
+  key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk_last.as_pk2(), &runtime);
   assert_eq!(key.is_some(), true);
 
   // Check key statuses

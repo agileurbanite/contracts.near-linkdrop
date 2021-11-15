@@ -1,14 +1,7 @@
-use crate::utils::{
-  assert_eq_with_gas,
-  get_account_access_key,
-  get_account_balance,
-  init_simulation,
-  UserUtility
-};
+use crate::utils::{CommonUtils, UserUtility};
 use near_sdk::AccountId;
 use near_sdk::json_types::U128;
 use near_sdk_sim::{call, view, to_yocto};
-use std::rc::Rc;
 
 #[test]
 fn create_near_campaign() {
@@ -16,8 +9,8 @@ fn create_near_campaign() {
   let transfer_amount = to_yocto("50");
   let tokens_per_key = to_yocto("7");
 
-  let (root, runtime) = init_simulation();
-  let user_utility = UserUtility::init(Rc::new(root), initial_balance);
+  let (root, runtime) = CommonUtils::init_simulation();
+  let user_utility = UserUtility::init(root, initial_balance);
   let contract = user_utility.contract;
   let pk = user_utility.public_key;
 
@@ -37,19 +30,19 @@ fn create_near_campaign() {
   result.assert_success();
 
   // Check User balance
-  let user_balance = get_account_balance(contract.account_id().as_str(), &runtime);
-  assert_eq_with_gas(
+  let user_balance = CommonUtils::retrieve_account_balance(contract.account_id().as_str(), &runtime);
+  CommonUtils::assert_eq_with_gas(
     to_yocto("50"), // 100 - 50 NEAR
     user_balance
   );
 
   // Check Campaign balance
   let campaign_account_id = format!("{}.{}", campaign_name, contract.account_id());
-  let campaign_balance = get_account_balance(campaign_account_id.as_str(), &runtime);
-  assert_eq_with_gas(transfer_amount, campaign_balance);
+  let campaign_balance = CommonUtils::retrieve_account_balance(campaign_account_id.as_str(), &runtime);
+  CommonUtils::assert_eq_with_gas(transfer_amount, campaign_balance);
 
   // Check New Campaign access key
-  let key = get_account_access_key(campaign_account_id.as_str(), pk.as_pk2(), &runtime);
+  let key = CommonUtils::retrieve_account_access_key(campaign_account_id.as_str(), pk.as_pk2(), &runtime);
   assert_eq!(key.is_some(), true);
 
   // Check the log for callback output

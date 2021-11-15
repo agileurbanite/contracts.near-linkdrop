@@ -1,10 +1,4 @@
-use crate::utils::{
-  assert_eq_with_gas,
-  assert_one_promise_error,
-  get_account_access_key,
-  get_account_balance,
-  NearCampaignUtility
-};
+use crate::utils::{CommonUtils, NearCampaignUtility};
 use near_sdk_sim::{call, to_yocto};
 
 #[test]
@@ -31,7 +25,7 @@ fn claim_non_existing_account() {
   result.assert_success();
 
   // One error must occur while running the method
-  assert_one_promise_error(
+  CommonUtils::assert_one_promise_error(
     result.clone(),
     "Can't complete the action because account \"bob\" doesn't exist"
   );
@@ -41,11 +35,11 @@ fn claim_non_existing_account() {
   assert!(result.logs()[0].contains("The link is claimed: false"));
 
   // The balance of the contract has not changed
-  let campaign_balance_end = get_account_balance(contract.account_id().as_str(), &runtime);
-  assert_eq_with_gas(campaign_balance_start, campaign_balance_end);
+  let campaign_balance_end = CommonUtils::retrieve_account_balance(contract.account_id().as_str(), &runtime);
+  CommonUtils::assert_eq_with_gas(campaign_balance_start, campaign_balance_end);
 
   // The last key should not be deleted
   let (pk, _) = keys.some_keys(0);
-  let key = get_account_access_key(contract.account_id().as_str(), pk.as_pk2(), &runtime);
+  let key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk.as_pk2(), &runtime);
   assert_eq!(key.is_some(), true);
 }

@@ -1,4 +1,4 @@
-use crate::utils::{get_contract_account, init_simulation, KeySet, Runtime};
+use crate::utils::{CommonUtils, KeySet, Runtime};
 use near_campaign::CampaignContract as NearCampaign;
 use near_crypto::{InMemorySigner, SecretKey};
 use near_sdk::{AccountId, PublicKey};
@@ -180,7 +180,7 @@ impl NearCampaignUtility {
     runtime: Runtime
   ) -> ContractAccount<NearCampaign> {
     let campaign_account_id = format!("{}.{}", CONTRACT_ID, USER_CONTRACT_ID);
-    get_contract_account(
+    CommonUtils::retrieve_contract_account(
       campaign_account_id.as_str(),
       secret_key.to_string().as_str(),
       runtime,
@@ -197,8 +197,7 @@ impl NearCampaignUtility {
     keys_from: usize,
     keys_to: usize
   ) -> Self {
-    let (root, runtime) = init_simulation();
-    let root = Rc::new(root);
+    let (root, runtime) = CommonUtils::init_simulation();
 
     NearCampaignUtility {
       root_account: root.clone(),
@@ -223,8 +222,7 @@ impl NearCampaignUtility {
     keys_from: usize,
     keys_to: usize
   ) -> Self {
-    let (root, runtime) = init_simulation();
-    let root = Rc::new(root);
+    let (root, runtime) = CommonUtils::init_simulation();
 
     let user_contract = Self::deploy_user(
       root.clone(),

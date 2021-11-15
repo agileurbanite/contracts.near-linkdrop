@@ -1,21 +1,14 @@
-use crate::utils::{
-  assert_eq_with_gas,
-  assert_one_promise_error,
-  get_account_balance,
-  init_simulation,
-  UserCreatorUtility
-};
+use crate::utils::{CommonUtils, UserCreatorUtility};
 use near_sdk::serde_json::json;
 use near_sdk_sim::to_yocto;
-use std::rc::Rc;
 
 #[test]
 fn create_user_with_low_gas() {
   let alice_initial_balance = to_yocto("200");
   let transfer_amount = to_yocto("100");
 
-  let (root, runtime) = init_simulation();
-  let user_creator = UserCreatorUtility::init(Rc::new(root), alice_initial_balance);
+  let (root, runtime) = CommonUtils::init_simulation();
+  let user_creator = UserCreatorUtility::init(root, alice_initial_balance);
   let contract = user_creator.contract;
   let alice = user_creator.user;
   let pk = user_creator.public_key;
@@ -38,13 +31,13 @@ fn create_user_with_low_gas() {
   assert!(!result.is_ok());
 
   // One error must occur while running the method
-  assert_one_promise_error(result.clone(), "Exceeded the prepaid gas");
+  CommonUtils::assert_one_promise_error(result.clone(), "Exceeded the prepaid gas");
 
   // Alice's balance has not changed
-  let alice_balance = get_account_balance(alice.account_id.as_str(), &runtime);
-  assert_eq_with_gas(alice_initial_balance, alice_balance);
+  let alice_balance = CommonUtils::retrieve_account_balance(alice.account_id.as_str(), &runtime);
+  CommonUtils::assert_eq_with_gas(alice_initial_balance, alice_balance);
 
   // The balance of the contract has not changed
-  let contract_balance_end = get_account_balance(contract.account_id().as_str(), &runtime);
-  assert_eq_with_gas(contract_balance_start, contract_balance_end);
+  let contract_balance_end = CommonUtils::retrieve_account_balance(contract.account_id().as_str(), &runtime);
+  CommonUtils::assert_eq_with_gas(contract_balance_start, contract_balance_end);
 }

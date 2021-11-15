@@ -1,8 +1,4 @@
-use crate::utils::{
-  assert_almost_eq_with_max_delta,
-  get_account_balance,
-  NearCampaignUtility
-};
+use crate::utils::{CommonUtils, NearCampaignUtility};
 use near_sdk::AccountId;
 use near_sdk_sim::{call, view, to_yocto, DEFAULT_GAS};
 
@@ -37,8 +33,8 @@ fn delete_campaign_with_active_keys() {
   assert!(campaign_account.is_none());
 
   // Check User balance. The company's funds are returned to the user's contract
-  let user_balance = get_account_balance(user.account_id().as_str(), &runtime);
-  assert_almost_eq_with_max_delta(
+  let user_balance = CommonUtils::retrieve_account_balance(user.account_id().as_str(), &runtime);
+  CommonUtils::assert_almost_eq_with_max_delta(
     to_yocto("700"),
     user_balance,
     to_yocto("0.2")

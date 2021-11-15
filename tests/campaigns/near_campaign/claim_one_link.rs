@@ -1,7 +1,4 @@
-use crate::utils::{
-  get_account_access_key,
-  NearCampaignUtility
-};
+use crate::utils::{CommonUtils, NearCampaignUtility};
 use near_sdk_sim::{call, to_yocto};
 
 #[test]
@@ -29,7 +26,7 @@ fn claim_one_link() {
 
   // Used key should not exist after the successful 'claim'
   let (pk, _) = keys.some_keys(0);
-  let key = get_account_access_key(contract.account_id().as_str(), pk.as_pk2(), &runtime);
+  let key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk.as_pk2(), &runtime);
   assert_eq!(key.is_none(), true);
 
   // Check Alice balance

@@ -5,7 +5,7 @@
   dead_code,
   unused_variables
 )]
-use crate::utils::{deploy_user_contract, get_contract_account, init_simulation, KeySet};
+use crate::utils::{CommonUtils, KeySet, UserUtility};
 use near_campaign::CampaignContract;
 use near_crypto::{InMemorySigner, SecretKey, Signer};
 use near_sdk::json_types::U128;
@@ -22,9 +22,9 @@ const SK: &str =
 
 #[test]
 fn failed_campaign_creation() {
-  let (root, runtime) = init_simulation();
-  let bob = deploy_user_contract(&root, "bob");
-  let alice = deploy_user_contract(&root, "alice");
+  let (root, runtime) = CommonUtils::init_simulation();
+  let bob = UserUtility::deploy(root.clone(), "bob", to_yocto("200"));
+  let alice = UserUtility::deploy(root, "alice", to_yocto("200"));
 
   {
     let res = runtime.borrow().view_account(alice.account_id().as_str());
@@ -52,8 +52,8 @@ fn failed_campaign_creation() {
 
 #[test]
 fn dev_test() {
-  let (root, runtime) = init_simulation();
-  let user = deploy_user_contract(&root, "bob");
+  let (root, runtime) = CommonUtils::init_simulation();
+  let user = UserUtility::deploy(root, "bob", to_yocto("200"));
 
   let view1 = view!(user.get_user_metadata());
   dbg!(view1.unwrap_json_value());

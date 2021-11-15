@@ -1,12 +1,10 @@
-use crate::utils::{deploy_nft_campaign, init_simulation, KeySet, NftFactory, Person};
+use crate::utils::{deploy_nft_campaign, CommonUtils, KeySet, NftFactory, Person};
 use near_crypto::InMemorySigner;
 use near_sdk_sim::{call, view, DEFAULT_GAS};
-use std::rc::Rc;
 
 #[test]
 fn test() {
-  let (root, _runtime) = init_simulation();
-  let root = Rc::new(root);
+  let (root, _runtime) = CommonUtils::init_simulation();
 
   let key_set = KeySet::create(0, 2);
   let (key, sk) = key_set.some_keys(0);

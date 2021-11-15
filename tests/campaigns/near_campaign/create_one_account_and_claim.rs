@@ -1,8 +1,4 @@
-use crate::utils::{
-  get_account_access_key,
-  get_account_balance,
-  NearCampaignUtility
-};
+use crate::utils::{CommonUtils, NearCampaignUtility};
 use near_sdk_sim::{call, to_yocto};
 
 #[test]
@@ -33,15 +29,15 @@ fn create_one_account_and_claim() {
   );
 
   // The new account should exist with 5 NEAR on the balance
-  let john_balance = get_account_balance("john.testnet", &runtime);
+  let john_balance = CommonUtils::retrieve_account_balance("john.testnet", &runtime);
   assert_eq!(to_yocto("5"), john_balance);
 
   // Verify that the key has been added to the new account
-  let johns_key = get_account_access_key("john.testnet", new_pk.as_pk2(), &runtime);
+  let johns_key = CommonUtils::retrieve_account_access_key("john.testnet", new_pk.as_pk2(), &runtime);
   assert_eq!(johns_key.is_some(), true);
 
   // Used key should not exist after the successful 'claim'
-  let key = get_account_access_key(contract.account_id().as_str(), pk.as_pk2(), &runtime);
+  let key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk.as_pk2(), &runtime);
   assert_eq!(key.is_none(), true);
 
   // Check the log for callback output

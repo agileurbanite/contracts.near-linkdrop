@@ -1,7 +1,4 @@
-use crate::utils::{
-  get_account_access_key,
-  NearCampaignUtility
-};
+use crate::utils::{CommonUtils, NearCampaignUtility};
 use near_campaign::clear_state::ClearStatus;
 use near_campaign::get_keys::Key;
 use near_sdk_sim::{call, to_yocto, view, DEFAULT_GAS};
@@ -33,12 +30,12 @@ fn clear_multiple_keys() {
 
   // Check first Campaign access key
   let (pk_first, _) = keys.some_keys(0);
-  let mut key = get_account_access_key(contract.account_id().as_str(), pk_first.as_pk2(), &runtime);
+  let mut key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk_first.as_pk2(), &runtime);
   assert_eq!(key.is_none(), true);
 
   // Check last Campaign access key
   let (pk_last, _) = keys.some_keys(9);
-  key = get_account_access_key(contract.account_id().as_str(), pk_last.as_pk2(), &runtime);
+  key = CommonUtils::retrieve_account_access_key(contract.account_id().as_str(), pk_last.as_pk2(), &runtime);
   assert_eq!(key.is_none(), true);
 
   // Check cleaning status
