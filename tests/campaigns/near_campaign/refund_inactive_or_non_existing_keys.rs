@@ -14,7 +14,7 @@ fn refund_inactive_or_non_existing_keys() {
   near_campaign_utility.add_keys();
 
   // Create beneficiary account
-  let alice = near_campaign_utility.create_user(to_yocto("10"));
+  let alice = near_campaign_utility.create_user("10");
 
   // Claim one link (sixth)
   near_campaign_utility.pre_claim_one_link(alice.account_id.clone(), 5);

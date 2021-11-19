@@ -3,7 +3,7 @@ use near_sdk_sim::{call, to_yocto};
 
 #[test]
 fn create_user_name_is_already_exists() {
-  let alice_initial_balance = to_yocto("200");
+  let alice_initial_balance = "200";
   let transfer_amount = to_yocto("100");
 
   let (root, runtime) = CommonUtils::init_simulation();
@@ -36,7 +36,7 @@ fn create_user_name_is_already_exists() {
 
   // Alice's balance has not changed
   let alice_balance = CommonUtils::retrieve_account_balance(alice.account_id.as_str(), &runtime);
-  CommonUtils::assert_eq_with_gas(alice_initial_balance, alice_balance);
+  CommonUtils::assert_eq_with_gas(to_yocto(alice_initial_balance), alice_balance);
 
   // The balance of the contract has not changed
   let contract_balance_end = CommonUtils::retrieve_account_balance(contract.account_id().as_str(), &runtime);

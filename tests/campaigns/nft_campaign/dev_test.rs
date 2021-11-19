@@ -1,27 +1,22 @@
-use crate::utils::{deploy_nft_campaign, CommonUtils, KeySet, NftFactory, Person};
-use near_crypto::InMemorySigner;
+use crate::utils::{NftCampaignUtility, NftFactory};
 use near_sdk_sim::{call, view, DEFAULT_GAS};
 
 #[test]
 fn test() {
-  let (root, _runtime) = CommonUtils::init_simulation();
+  let mut nft_campaign_utils = NftCampaignUtility::init_nft_campaign("nft_campaign", 0, 2);
+  let (key, _) = nft_campaign_utils.keys.some_keys(0);
+  let (key2, _) = nft_campaign_utils.keys.some_keys(1);
 
-  let key_set = KeySet::create(0, 2);
-  let (key, sk) = key_set.some_keys(0);
-  let (key2, _sk2) = key_set.some_keys(1);
-
-  let alice = Person::create_alice(root.clone());
-  let nft_factory = NftFactory::default_init(root.clone(), "alice");
-  let mut nft_campaign = deploy_nft_campaign(&root, "nft_campaign");
-
-  nft_factory.default_nft_mint(&alice.account);
-  nft_factory.nft_transfer_call(&alice.account, "nft_campaign", "1", key.as_pk2().to_string().as_str());
+  let alice = nft_campaign_utils.create_user("alice");
+  let nft_factory = NftFactory::default_init(nft_campaign_utils.root_account.clone(), "alice");
+  nft_factory.default_nft_mint(&alice);
+  nft_factory.nft_transfer_call(&alice, "nft_campaign", "1", key.as_pk2().to_string().as_str());
 
   // dbg!(nft_factory.get_nft_token("1"));
 
   // Call claim
-  let signer = InMemorySigner::from_secret_key("nft_campaign".to_string(), sk);
-  nft_campaign.user_account.signer = signer.clone();
+  nft_campaign_utils.set_signer_to_claim(0);
+  let nft_campaign = nft_campaign_utils.contract;
 
   let result2 = call!(
     nft_campaign.user_account,
@@ -37,8 +32,8 @@ fn test() {
 
   // Check key
   // {
-  //   // let res = runtime.borrow().view_account(&nft.account_id().as_str());
-  //   let key = runtime.borrow().view_access_key("nft_campaign", &pk);
+  //   // let res = nft_campaign_utils.runtime.borrow().view_account(&nft.account_id().as_str());
+  //   let key = nft_campaign_utils.runtime.borrow().view_access_key("nft_campaign", &key.as_pk2());
   //   dbg!(key);
   // }
 }

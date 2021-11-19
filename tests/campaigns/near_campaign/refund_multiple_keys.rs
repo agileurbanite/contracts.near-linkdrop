@@ -17,7 +17,7 @@ fn refund_multiple_keys() {
   near_campaign_utility.add_keys();
 
   // Create beneficiary account
-  let alice = near_campaign_utility.create_user(to_yocto("10"));
+  let alice = near_campaign_utility.create_user("10");
 
   let runtime = near_campaign_utility.runtime;
   let contract = near_campaign_utility.contract;

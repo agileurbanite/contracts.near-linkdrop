@@ -3,7 +3,7 @@ use near_sdk_sim::{call, to_yocto};
 
 #[test]
 fn create_user() {
-  let alice_initial_balance = to_yocto("200");
+  let alice_initial_balance = "200";
   let transfer_amount = to_yocto("100");
 
   let (root, runtime) = CommonUtils::init_simulation();

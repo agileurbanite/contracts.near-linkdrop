@@ -4,7 +4,7 @@ use near_sdk_sim::{call, to_yocto};
 #[test]
 #[should_panic(expected = r#"NotEnoughBalance"#)]
 fn create_user_not_enough_balance() {
-  let alice_initial_balance = to_yocto("200");
+  let alice_initial_balance = "200";
   let transfer_amount = to_yocto("200");
 
   let (root, _runtime) = CommonUtils::init_simulation();

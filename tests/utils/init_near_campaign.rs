@@ -1,4 +1,4 @@
-use crate::utils::{CommonUtils, KeySet, Runtime};
+use crate::utils::{CommonUtils, KeySet, Person, Runtime};
 use near_campaign::CampaignContract as NearCampaign;
 use near_crypto::{InMemorySigner, SecretKey};
 use near_sdk::{AccountId, PublicKey};
@@ -101,8 +101,8 @@ impl NearCampaignUtility {
     self.contract.user_account.signer = claim_signer;
   }
 
-  pub fn create_user(&self, init_balance: u128) -> UserAccount {
-    self.root_account.create_user("alice".parse().unwrap(), init_balance)
+  pub fn create_user(&self, init_balance: &str) -> UserAccount {
+    Person::create_alice(self.root_account.clone(), init_balance).account
   }
 
   pub fn pre_create_account_and_claim(

@@ -12,7 +12,7 @@ fn claim_one_link() {
   );
   near_campaign_utility.add_keys();
   near_campaign_utility.set_signer_to_claim(0);
-  let alice = near_campaign_utility.create_user(to_yocto("10"));
+  let alice = near_campaign_utility.create_user("10");
   let runtime = near_campaign_utility.runtime;
   let contract = near_campaign_utility.contract;
   let keys = near_campaign_utility.keys;

@@ -1,4 +1,4 @@
-use crate::utils::{KeySet, PK};
+use crate::utils::{KeySet, Person, PK};
 use near_crypto::SecretKey;
 use near_sdk_sim::{deploy, lazy_static_include, to_yocto, ContractAccount, UserAccount};
 use std::rc::Rc;
@@ -31,8 +31,8 @@ impl UserCreatorUtility {
     user_creator
   }
 
-  pub fn create_user(root_account: Rc<UserAccount>, init_balance: u128) -> UserAccount {
-    root_account.create_user("alice".parse().unwrap(), init_balance)
+  pub fn create_user(root_account: Rc<UserAccount>, init_balance: &str) -> UserAccount {
+    Person::create_alice(root_account, init_balance).account
   }
 
   pub fn create_drop_user(&self) -> UserAccount {
@@ -45,7 +45,7 @@ impl UserCreatorUtility {
     key_set.some_keys(0)
   }
 
-  pub fn init(root_account: Rc<UserAccount>, init_balance: u128) -> Self {
+  pub fn init(root_account: Rc<UserAccount>, init_balance: &str) -> Self {
     let (pk, sk) = Self::create_keys();
     UserCreatorUtility {
       contract: Self::deploy(root_account.clone(), CONTRACT_ID),
