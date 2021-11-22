@@ -32,7 +32,7 @@ impl NftFactory {
   }
 
   pub fn default_init(root_account: Rc<UserAccount>, owner_id: &str) -> Self {
-    let mut nft_factory = Self::deploy(root_account, "nft_factory", "100");
+    let nft_factory = Self::deploy(root_account, "nft_factory", "100");
     nft_factory.initialize_contract(owner_id);
     nft_factory
   }

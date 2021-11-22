@@ -15,7 +15,7 @@ impl Person {
     Person { account }
   }
 
-  pub fn create_alice(root_account: Rc<UserAccount>) -> Self {
-    Self::new(root_account, "alice", "100")
+  pub fn create_alice(root_account: Rc<UserAccount>, init_balance: &str) -> Self {
+    Self::new(root_account, "alice", init_balance)
   }
 }

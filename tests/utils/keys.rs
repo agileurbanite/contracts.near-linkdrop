@@ -1,4 +1,4 @@
-use near_crypto::{PublicKey as PubKey, SecretKey};
+use near_crypto::SecretKey;
 use near_sdk::PublicKey;
 use std::str::FromStr;
 
@@ -413,6 +413,26 @@ pub struct KeySet {
   set_sk: Vec<String>,
 }
 
+pub struct PK {
+  pk: String,
+}
+
+impl PK {
+  pub fn new(pk: String) -> Self {
+    Self {
+      pk,
+    }
+  }
+
+  pub fn as_pk1(&self) -> PublicKey {
+    self.pk.as_str().parse().unwrap()
+  }
+
+  pub fn as_pk2(&self) -> near_crypto::PublicKey {
+    near_crypto::PublicKey::from_str(self.pk.as_str()).unwrap()
+  }
+}
+
 impl KeySet {
   pub fn create(from: usize, to: usize) -> Self {
     Self {
@@ -432,9 +452,9 @@ impl KeySet {
   pub fn some_keys(
     &self,
     index: usize,
-  ) -> (near_sdk::PublicKey, near_crypto::PublicKey, SecretKey) {
-    let pk: &str = match self.set_pk.get(index) {
-      Some(p) => p.as_str(),
+  ) -> (PK, SecretKey) {
+    let pk = match self.set_pk.get(index) {
+      Some(p) => p.clone(),
       _ => panic!("Invalid index"),
     };
     let sk: &str = match self.set_sk.get(index) {
@@ -442,8 +462,7 @@ impl KeySet {
       _ => panic!("Invalid index"),
     };
     (
-      pk.parse().unwrap(),
-      PubKey::from_str(pk).unwrap(),
+      PK::new(pk),
       sk.parse().unwrap(),
     )
   }
