@@ -1,5 +1,5 @@
 [package]
-name = "near-linkdrop"
+name = "neardrop"
 version = "2.0.0"
 authors = ["eclipseeer <eclipseeer@gmail.com>"]
 edition = "2018"
@@ -11,7 +11,6 @@ members = [
   'contracts/user',
   'contracts/campaigns/near_campaign',
   'contracts/campaigns/nft_campaign',
-  'contracts/campaign_creators/nft_campaign_creator',
 ]
 
 [dev-dependencies]
@@ -22,4 +21,3 @@ user_creator = { path = "contracts/user_creator" }
 user = { path = "contracts/user" }
 near_campaign = { path = "contracts/campaigns/near_campaign" }
 nft_campaign = { path = "contracts/campaigns/nft_campaign" }
-nft_campaign_creator = { path = "contracts/campaign_creators/nft_campaign_creator" }
