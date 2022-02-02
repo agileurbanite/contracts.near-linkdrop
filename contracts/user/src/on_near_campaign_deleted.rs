@@ -1,5 +1,6 @@
 use crate::*;
 
+// We need this callback as long as we have NEAR Campaigns V1 which may call it
 #[near_bindgen]
 impl User {
   pub fn on_near_campaign_deleted(&mut self) -> bool {

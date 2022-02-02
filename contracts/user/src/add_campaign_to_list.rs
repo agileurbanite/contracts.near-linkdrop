@@ -2,8 +2,8 @@ use crate::*;
 
 #[near_bindgen]
 impl User {
-  pub fn on_campaign_created(&mut self, campaign_id: AccountId) {
-    // TODO only campaign creator can call this method - add validation
+  #[private]
+  pub fn add_campaign_to_list(&mut self, campaign_id: AccountId) {
     self.campaigns.insert(&campaign_id);
 
     env::log_str(

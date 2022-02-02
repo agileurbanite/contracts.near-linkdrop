@@ -1,11 +1,11 @@
 [package]
 name = "near_campaign"
-version = "2.0.0"
+version = "1.0.0"
 authors = ["eclipseeer <eclipseeer@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-near-sdk = "4.0.0-pre.4"
+near-sdk = "4.0.0-pre.2"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

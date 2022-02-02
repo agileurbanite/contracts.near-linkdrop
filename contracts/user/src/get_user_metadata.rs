@@ -1,5 +1,4 @@
 use crate::*;
-use near_sdk::serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 #[serde(crate = "near_sdk::serde")]

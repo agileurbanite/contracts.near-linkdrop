@@ -1,34 +1,18 @@
-mod create_near_campaign;
-mod gas;
+mod add_campaign_to_list;
 mod get_campaigns;
 mod get_user_metadata;
 mod new;
-mod on_campaign_created;
-mod on_near_campaign_created;
 mod on_near_campaign_deleted;
+mod remove_campaign_from_list;
 
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::UnorderedSet;
-use near_sdk::json_types::U128;
-use near_sdk::serde_json::json;
-use near_sdk::{
-  env, ext_contract, is_promise_success, near_bindgen, AccountId, PanicOnDefault, Promise,
-};
-
-const NEAR_CAMPAIGN_WASM: &[u8] = include_bytes!("../../../wasm/near_campaign.wasm");
-
-#[cfg(test)]
-mod tests;
-
-#[ext_contract(ext_self_user)]
-pub trait ExtSelfUser {
-  fn on_near_campaign_created(&mut self, campaign_id: AccountId) -> bool;
-}
+use near_sdk::serde::{Deserialize, Serialize};
+use near_sdk::{env, is_promise_success, near_bindgen, AccountId, PanicOnDefault};
 
 #[near_bindgen]
 #[derive(BorshSerialize, BorshDeserialize, PanicOnDefault)]
 pub struct User {
-  future_campaign_id: u64,
   campaigns: UnorderedSet<AccountId>,
   version: String,
 }

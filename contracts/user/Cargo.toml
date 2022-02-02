@@ -5,7 +5,7 @@ authors = ["eclipseeer <eclipseeer@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-near-sdk = "4.0.0-pre.4"
+near-sdk = "4.0.0-pre.6"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
