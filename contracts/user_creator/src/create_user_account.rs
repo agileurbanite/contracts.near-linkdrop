@@ -2,11 +2,11 @@ use crate::*;
 use near_sdk::{AccountId, Gas, PublicKey};
 use std::convert::TryFrom;
 
-const BASE_GAS: Gas = Gas(25_000_000_000_000); // 25 TGas
+const BASE_GAS: Gas = Gas(25_000_000_000_000); // 25 TGas // TODO use common package
 
 #[near_bindgen]
 impl UserCreator {
-  #[payable]
+  #[payable] // TODO pass user id instead of name - remove unneeded checks
   pub fn create_user_account(name: String, public_key: PublicKey) -> Promise {
     assert!(!name.contains('.'));
 

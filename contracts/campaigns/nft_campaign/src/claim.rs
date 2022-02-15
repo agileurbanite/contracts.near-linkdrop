@@ -1,7 +1,8 @@
 use crate::utils::update_drop_status;
 use crate::*;
+use common::tgas;
+use near_sdk::is_promise_success;
 use near_sdk::serde_json::json;
-use near_sdk::{is_promise_success, Gas};
 
 #[near_bindgen]
 impl NftCampaign {
@@ -12,11 +13,11 @@ impl NftCampaign {
 
     assert_eq!(
       drop.status,
-      DropStatus::ACTIVE,
+      DropStatus::Active,
       "Cannot claim inactive drop"
     );
 
-    Promise::new(drop.nft.contract_id.clone())
+    Promise::new(drop.nft.collection_id)
       .function_call(
         "nft_transfer".to_string(),
         json!({
@@ -26,7 +27,7 @@ impl NftCampaign {
         .to_string()
         .into_bytes(),
         1,
-        Gas::from(25_000_000_000_000),
+        tgas(25),
       )
       .then(
         Promise::new(env::current_account_id()).function_call(
@@ -37,7 +38,7 @@ impl NftCampaign {
           .to_string()
           .into_bytes(),
           0,
-          Gas::from(25_000_000_000_000),
+          tgas(25),
         ),
       )
   }
@@ -52,7 +53,7 @@ impl NftCampaign {
       env::panic_str(
         format!(
           "Failed to transfer token '{}' of @{} to @{}",
-          &drop.nft.token_id, &drop.nft.contract_id, beneficiary_id,
+          &drop.nft.token_id, &drop.nft.collection_id, beneficiary_id,
         )
         .as_str(),
       );
@@ -60,12 +61,12 @@ impl NftCampaign {
 
     self
       .drops
-      .insert(&key, &update_drop_status(&drop, DropStatus::CLAIMED));
+      .insert(&key, &update_drop_status(&drop, DropStatus::Claimed));
 
     env::log_str(
       format!(
         "Successfully transfer token '{}' of @{} to @{}",
-        &drop.nft.token_id, &drop.nft.contract_id, beneficiary_id,
+        &drop.nft.token_id, &drop.nft.collection_id, beneficiary_id,
       )
       .as_str(),
     );
