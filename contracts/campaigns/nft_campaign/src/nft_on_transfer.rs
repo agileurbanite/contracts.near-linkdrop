@@ -1,7 +1,6 @@
 use crate::*;
 use near_sdk::PromiseOrValue;
 
-// TODO Do we need to write logic here or it is better to just call add_drop func from this method?
 #[allow(unused)]
 #[near_bindgen]
 impl NftCampaign {
@@ -22,7 +21,7 @@ impl NftCampaign {
         nft: NFT {
           token_id: token_id.clone(),
           collection_id: env::predecessor_account_id(),
-          owner_id: previous_owner_id,
+          previous_owner_id,
         },
       },
     );
@@ -39,7 +38,7 @@ impl NftCampaign {
 
     Promise::new(env::current_account_id()).add_access_key(
       key,
-      1_000_000_000_000_000_000_000_000,
+      1_000_000_000_000_000_000_000_000, // TODO set lower allowance
       env::current_account_id(),
       "claim".to_string(),
     );
