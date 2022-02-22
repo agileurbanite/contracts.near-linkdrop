@@ -34,18 +34,24 @@ impl NftCampaign {
 
   #[private]
   pub fn on_claim(&mut self, receiver_id: AccountId) {
-    let is_success = is_promise_success();
     let key = env::signer_account_pk();
     let drop = self.drops.get(&key).unwrap();
 
-    if !is_success {
+    if !is_promise_success() {
       return log_failed_nft_transfer(drop.nft.collection_id, drop.nft.token_id, receiver_id);
     }
 
+    self.metadata.drops_stats.active -= 1;
+    self.metadata.drops_stats.claimed += 1;
     self
       .drops
-      .insert(&key, &update_drop_status(&drop, DropStatus::Claimed));
+      .insert(&key, &update_drop_status(&drop, DropStatus::Claimed)); // TODO check if possible to mutate status directly
+
+    if self.metadata.drops_stats.active == 0 {
+      self.metadata.status = CampaignStatus::Completed;
+    };
 
     log_successful_nft_transfer(drop.nft.collection_id, drop.nft.token_id, receiver_id);
+    Promise::new(env::current_account_id()).delete_key(key);
   }
 }

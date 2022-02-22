@@ -1,7 +1,8 @@
 use crate::*;
 use near_sdk::PromiseOrValue;
 
-#[allow(unused)]
+const ACCESS_KEY_ALLOWANCE: u128 = 90_000_000_000_000_000_000_000; // 0.09 NEAR
+
 #[near_bindgen]
 impl NftCampaign {
   pub fn nft_on_transfer(
@@ -11,16 +12,23 @@ impl NftCampaign {
     token_id: TokenId,
     msg: String,
   ) -> PromiseOrValue<bool> {
-    // TODO validate that predecessor_account_id() is a NFT contract
     let key = msg.parse().expect("Invalid key");
+    let collection_id = env::predecessor_account_id();
 
+    assert!(
+      self.collections_whitelist.contains(&collection_id),
+      "Account @{} has no permission to call this method",
+      collection_id
+    );
+
+    self.metadata.drops_stats.active += 1;
     self.drops.insert(
       &key,
       &Drop {
         status: DropStatus::Active,
         nft: NFT {
           token_id: token_id.clone(),
-          collection_id: env::predecessor_account_id(),
+          collection_id: collection_id.clone(),
           previous_owner_id,
         },
       },
@@ -28,18 +36,16 @@ impl NftCampaign {
 
     env::log_str(
       format!(
-        "Get token `{}` on @{} contract from @{} ",
-        token_id,
-        env::predecessor_account_id(),
-        sender_id,
+        "Get token `{}` of @{} collection from @{} ",
+        token_id, collection_id, sender_id,
       )
       .as_str(),
     );
 
     Promise::new(env::current_account_id()).add_access_key(
       key,
-      1_000_000_000_000_000_000_000_000, // TODO set lower allowance
-      env::current_account_id(),
+      ACCESS_KEY_ALLOWANCE,
+      collection_id,
       "claim".to_string(),
     );
 
